@@ -54,7 +54,7 @@ Sackgassenerkennungs- und Gruppierungsheuristik.^2 Doch zuerst einmal gilt es da
 Modellieren, dass man es mit klassischen Algorithmen bearbeiten kann. Dafür benötigt man in
 diesem Fall einen Graphen.
 
-1 Vgl. https://xlinux.nist.gov/dads/HTML/offline.html
+1 Vgl. https://xlinux.nist.gov/dads/HTML/offline.html 
 2 Aus dem Englischen: Gateway Heuristik und Dead-End Heuristik:
 Vgl.Yngvi Björnson, Kári Halldórson, “Improved Heuristics for Optimal Pathfinding on Game Maps”, 2006,
 Reykjavik University, Iceland und
