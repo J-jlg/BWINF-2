@@ -123,7 +123,7 @@ Agentenbatterie von dem minimum ausgehend immer plus zwei haben.
 ```math
 SE = \frac{\sigma}{\sqrt{n}}
 ```
-
+Σ<sub>n</sub><sup>i=1</sup> min(v->v')+(i*2)
 Um jetzt nicht jede einzelne Kante in dem dynamischen Graphen, der schließlich für eine
 Reduzierung der Kanten gedacht ist in dem Graph abzubilden, wird nur der kürzeste Pfad von
 v → v' bzw. v → v abgebildet. In diesem sind alle anderen Kanten nach v' mit inbegriffen, was die
