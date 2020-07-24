@@ -180,7 +180,7 @@ O(4*e(n)) ist wohl deutlich klar.
 Da nun Kanten und Knoten generiert wurden, gilt es, bevor man einen Pfad zum Ziel sucht, dieses
 erstmals zu definieren. Es wird ein Zielzustand in Form eines Graphen gesucht, inwelchem die
 Agentenbatterie gleich der Anzahl an gesammten Batterie Energien des Spielfeldes ist und es eine
-Kante von vAgenten → v' bzw. vAgenten → v mit den Kosten >= a.getEnergie() gibt. Zudem muss für alle
+Kante von vAgenten → v' bzw. v<sub>Agenten</sub> → v mit den Kosten >= a.getEnergie() gibt. Zudem muss für alle
 anderen Knoten v gelten: ∀∈v V:v.isDone=true.
 
 #### 1.5. SZK und Geo-Gruppen
@@ -314,7 +314,7 @@ würde, als ohne. Dies hat zwei Gründe:
     zwar zu lokalen anderen SCC Gruppen expandieren konnten, jedoch global falsch waren.
 
 
-![](https://i.ibb.co/qsh7dRD/1.png)
+![](https://i.ibb.co/qsh7dRD/1.png)  
 Wie man in diesem Beispiel unschwer erkennen kann, gibt es keinen Weg von SCC0 →SCC 1 (links)
 was jedoch von dem Runtime-SCC Algorithmus nicht gesehen wird, da nur nach den lokalen
 Nachbarn gesucht wird! Würde man den Runtime/Laufzeit-Algorithmus um den globalen Faktor
@@ -374,12 +374,16 @@ Wie man sehen kann, werden die Bereiche bis zu dem Ergebnis des Termes oben in 3
 unterteilt und dann je Ergebnis individuell unterteilt. Dabei bleiben bei jedem Ergebnis/Isomorph
 die Reihen außen immer gleich.
 
-#### 11. Optimierung der Gruppierung
+#### 1.11. Optimierung der Gruppierung
 
 Da jedoch nicht alle Spielfelder ein einheitliches Muster, wie z.B. in 2 & 3 besitzen, sondern
 teilweise auch komplexer aufgebaut sind, wurde das Clusterverfahren zur Bestimmung der Gruppen
 um die Allgemeinheit optimiert. Folgende Beispiele wäre suboptimal für den bisweilen
 Clusteralgorithmus:
+
+![](https://i.ibb.co/gD2cPvY/1.png)  
+![](https://i.ibb.co/ZHC9fXP/2.png)
+![](https://i.ibb.co/vYp2Vbz/3.png)
 
 Es würde in diesen Beispielen nichtnur die Performance, wegen der unnötigen Vorverarbeitung
 leiden, sondern auch die Effizienz und Zielfindung(Heuristik). Wie die Beispiele veranschaulichen,
@@ -388,10 +392,7 @@ entstehen bspw. 1x1 Blöcke, was im negativen Zusammenspiel mit dem Bergsteigera
 steht, da er darauf basiert, strukturiert Blöcke/Stationen abzuarbeiten. Bei einzelnen Blöcken bleibt
 er im w.c. auf einem lokalen Gipfel stecken. Um das Clusterverfahren nun zu Optimieren, wird
 Start- und Endpunkt der Clusteranalyse, nach SZK und Geo-Gruppen bzw. Besonderheiten in der
-Geo-Gruppierung jeweils von den Eckwertenentnommen.
-Eine weitere Optimierung ist, das Zusammenfügen der beiden Gruppierungsverfahren. Es wird nun
-sowohl auf SCC, als auf Geo-Gruppen(nach dem gerade optimierten Clusterverfahren) getestet.
-Dabei spielt der SZK-Algorithmus(Sackgassenerkennungsalgorithmus) eher bei der
+Geo-Gruppierung jeweils von den Eckwertenentnommen. Eine weitere Optimierung ist, das Zusammenfügen der beiden Gruppierungsverfahren. Es wird nun sowohl auf SCC, als auf Geo-Gruppen(nach dem gerade optimierten Clusterverfahren) getestet. Dabei spielt der SZK-Algorithmus(Sackgassenerkennungsalgorithmus) eher bei der
 Vorverarbeitung, aber auch beim Geo-Gruppen Maintainen eine große Rolle. Das (II)
 Clusterverfahren dient dabei eher für die Heuristik an sich Beihilfe. Durch das Optimieren und
 letzendlich auch dass Zusammenfügen, lässt sich die Laufzeit jedes Beispieles um einen Hauch und
@@ -399,21 +400,20 @@ für die Beispiele am Anfang drastisch verbessern. Das bis jetzt „Zeitintensiv
 benötigt jetzt lediglich 3,9sek anstatt 4,7sek. Diese Verbesserung zieht sich wie gesagt durch alle
 Beispiele logischerweise durch.
 
-12. Ungültige Map ausschließen/EndNodeDetection
+#### 12. Ungültige Map ausschließen/EndNodeDetection
 
 Dies soll dazu dienen, Felder ohne Ergebnis im vorhinein Auszuschließen und zu erkennen. Diese
-Abfrage wird also beim Vorverarbeiten bzw. Maintainen^13 getätigt. Sie versucht, wenn möglich den
+Abfrage wird also beim [Vorverarbeiten bzw. Maintainen](www.google.de "Es sich ersichtlich, dass dies natürlich ein Zustand mit Batterien, der Anzahl 0 ist. Mit Vorverarbeiten wird hier dass
+ermitteln der Nachbarn, zeitgleich mit dem BFS gemeint. Maintainen bei Veränderung bzw. Nachbar.isDone=true.
+Dies spiegelt sich in der konstanten Laufzeit von O(1) wieder.") getätigt. Sie versucht, wenn möglich den
 letzten Knoten des Spielfeldes zu ermitteln. Das hierfür verwendete Verfahren wird anhand des
 folgenden Beispieles(Zustand) deutlich:
+
+![](https://i.ibb.co/m90DpNk/1.png)
 
 Wie man erkennen kann, muss entweder die Rote oder einer der beiden gelben Batterien, das Letzte
 zu befahrene Node sein. Die EndNodeDetection schaut sich also grundlegend solche Extrempunkte,
 die Umgeben von „fertigen" Batterien sind an und entscheidet anschließend, ob dieses Spielfeld
-
-13 Es sich ersichtlich, dass dies natürlich ein Zustand mit Batterien, der Anzahl 0 ist. Mit Vorverarbeiten wird hier dass
-ermitteln der Nachbarn, zeitgleich mit dem BFS gemeint. Maintainen bei Veränderung bzw. Nachbar.isDone=true.
-Dies spiegelt sich in der konstanten Laufzeit von O(1) wieder.
-
 lösbar ist oder nicht. Grundlegend aber gilt, ermittelt das Verfahren zwei solcher Endpunkte oder
 mehr, wird zum nächsten Zustand gesprungen. Dieses Verfahren ist zwar nicht für die
 Beispielaufgaben nützlich, jedoch hat sich in eigenen bzw. auch Extremstellung/Abänderungen der
@@ -421,7 +421,7 @@ Aufgaben, wie z.B. dass das gesammte Feld mit nur Batterien mit der Energie eins
 dann eine Batterie wie oben eine höhere Batterie(8) hat gezeigt, dass dieses Verfahren massiv
 Rechenleistung und damit Laufzeit wegen Sackgassen bzw. ungültigen Stellungen spart.
 
-13. Grenzverhalten der Heuristik/Limitierung der Heuristik
+#### 13. Grenzverhalten der Heuristik/Limitierung der Heuristik
 
 Die Heuristik schafft es zwar den Graphen einzuteilen bzw. so intelligent wie möglich zu
 expandieren, jedoch stoßt sie, wie auf Dauer alle Such-Heuristiken bei gewissen Spielfeldern an
@@ -430,12 +430,12 @@ Gruppen einteilt, was somit die Gesamtgröße: √81. Aber natürlich kommt man 
 drumrum, dass das Feld und somit auch die Anzahl Batterien theoretisch unendlich groß sein
 könnte, was die bisherigbenutzten Cluster- und Suchverfahren ab einer gewissen Größe entkräftet.
 
-14. GUI
-
+#### 14. GUI
+![](https://i.ibb.co/zSbJGYG/1.png)  
 Die grafische Oberfläche besteht aus dem Spielfeld(Mitte) und den Buttons(Rechts). Der Roboter
 ist als Grüner Kreis dargestellt und die Ersatzbatterien als Graue kleinere Kreise. Das Spielfeld
 kann entweder als Textdatei mit einem Filechooser per „Lade Datei" Button oder manuell als
-Prompt^14 per „Eingabe" Button eingelesen werden. Ist ein Spielfeld ungültig, wird dies mittels eines
+Prompt per „Eingabe" Button eingelesen werden. Ist ein Spielfeld ungültig, wird dies mittels eines
 Promtes dem Nutzer mitgeteilt. Möchte man das Spielfeld löschen, muss man auf den Button
 „Löschen" klicken oder nochmals ein neues Spielfeld eingeben. Die Koordinaten, befinden sich
 rechts, bzw. unter dem Spielfeld. Diese können mithilfe des Scrollpanels am Rand des Spielfeldes
@@ -444,8 +444,6 @@ die aktuelle Ersatzbatterie angezeigt, welche man mit der Maus überfährt/über
 dass Spielfeld nun erfolgreich eingelesen, bedarf es des „Start" Buttons, dass ein Weg, mit den
 beschriebenen Verfahren errechnet wird. Falls kein Weg gefunden wurde, taucht ein Promt auf,
 
-14 Oder auch: Pop-up genannt
-
 welches dies mitteilt. Wird ein Weg gefunden, wird das Spielfeld automatisch zum Zielzustand
 gebracht und der Weg wird ausgegeben(siehe Darstellung der Lösung ). Um nun den Pfad grafisch
 zu betrachten, muss der Button: „<---" unter „Anfang" gedrückt werden. Dies lässt das Spielfeld
@@ -453,15 +451,16 @@ zum Eingangszustand springen. Einzelne Schritte können mit dem: „→ " Button
 dargestellt/ausgeführt werden. Der Button: „--->" bzw. „Ende" lässt dabei den Benutzer wieder vom
 aktuellen Zustand zum Endzustand springen.
 
-15. Darstellung der Lösung
+#### 15. Darstellung der Lösung
 
 Die Lösung wird zudem auch in Textform dargestellt. Ein Beispiel dafür wäre:
 Hoch,Rechts,Rechts,Hoch,Hoch,Hoch,Runter,Runter,Runter,Hoch,Hoch,Links,Links,
 Links,Links,Runter,Hoch,
 Die Zwischenschritte lassen sich anhand der Grafischen Oberfläche ablesen.
 
-16. Beispiele
+#### 16. Beispiele
 
+```sh
 0) Eingabe:
 5
 3,5,
@@ -470,17 +469,125 @@ Die Zwischenschritte lassen sich anhand der Grafischen Oberfläche ablesen.
 1,2,
 5,4,
 (Grafik siehe GUI )
+```
 
+```sh
 Ausgabe:
 Hoch,Rechts,Rechts,Hoch,Hoch,Hoch,Runter,Runter,Runter,Hoch,Hoch,Links,Links,
 Links,Links,Runter,Hoch,
+```
 
+![](https://i.ibb.co/HNtJgwX/1.png)
+
+```sh
 1) Eingabe:
 10
-1,1,
+1,1,1
 99
-1,2,
+1,2,1
+1,3,1
+1,4,1
+1,5,1
+1,6,1
+1,7,1
+1,8,1
+1,9,1
+1,10,1
+2,1,1
+2,2,1
+2,3,1
+2,4,1
+2,5,1
+2,6,1
+2,7,1
+2,8,1
+2,9,1
+2,10,1
+3,1,1
+3,2,1
+3,3,1
+3,4,1
+3,5,1
+3,6,1
+3,7,1
+3,8,1
+3,9,1
+3,10,1
+4,1,1
+4,2,1
+4,3,1
+4,4,1
+4,5,1
+4,6,1
+4,7,1
+4,8,1
+4,9,1
+4,10,1
+5,1,1
+5,2,1
+5,3,1
+5,4,1
+5,5,1
+5,6,1
+5,7,1
+5,8,1
+5,9,1
+5,10,1
+6,1,1
+6,2,1
+6,3,1
+6,4,1
+6,5,1
+6,6,1
+6,7,1
+6,8,1
+6,9,1
+6,10,1
+7,1,1
+7,2,1
+7,3,1
+7,4,1
+7,5,1
+7,6,1
+7,7,1
+7,8,1
+7,9,1
+7,10,1
+8,1,1
+8,2,1
+8,3,1
+8,4,1
+8,5,1
+8,6,1
+8,7,1
+8,8,1
+8,9,1
+8,10,1
+9,1,1
+9,2,1
+9,3,1
+9,4,1
+9,5,1
+9,6,1
+9,7,1
+9,8,1
+9,9,1
+9,10,1
+10,1,1
+10,2,1
+10,3,1
+10,4,1
+10,5,1
+10,6,1
+10,7,1
+10,8,1
+10,9,1
+10,10,1
+```
 
+![](https://i.ibb.co/6BJ8tSs/1.png)
+
+```sh
 Ausgabe:
 Rechts,Runter,Links,Runter,Rechts,Runter,Links,Runter,Rechts,Runter,Links,Runter,Rechts,Runter,
 Links,Runter,Runter,Rechts,Hoch,Rechts,Runter,Rechts,Hoch,Hoch,Links,Hoch,Rechts,Hoch,Links
@@ -489,31 +596,140 @@ r,Rechts,Runter,Links,Runter,Rechts,Runter,Links,Runter,Rechts,Runter,Links,Runt
 s,Hoch,Rechts,Runter,Rechts,Hoch,Hoch,Links,Hoch,Rechts,Hoch,Links,Hoch,Rechts,Hoch,Links,
 Hoch,Rechts,Hoch,Links,Hoch,Rechts,Rechts,Rechts,Runter,Links,Runter,Rechts,Runter,Links,Run
 ter,Rechts,Runter,Links,Runter,Rechts,Runter,Links,Runter,Rechts,Runter,Links,Links,
+```
 
+![](https://i.ibb.co/30S9QQ7/1.png)
+
+```sh
 2) Eingabe:
 11
-6,6,
+6,6,2
 120
-1,1,
-1,2,
-1,3,
-1,4,
-1,5,
-1,6,
-1,7,
-1,8,
-1,9,
-1,10,
-1,11,
-2,1,
-2,2,
-2,3,
-2,4,
-2,5,
-2,6,
-2,7,
-2,8,
+1,1,2
+1,2,2
+1,3,2
+1,4,2
+1,5,2
+1,6,2
+1,7,2
+1,8,2
+1,9,2
+1,10,2
+1,11,2
+2,1,2
+2,2,2
+2,3,2
+2,4,2
+2,5,2
+2,6,2
+2,7,2
+2,8,2
+2,9,2
+2,10,2
+2,11,2
+3,1,2
+3,2,2
+3,3,2
+3,4,2
+3,5,2
+3,6,2
+3,7,2
+3,8,2
+3,9,2
+3,10,2
+3,11,2
+4,1,2
+4,2,2
+4,3,2
+4,4,2
+4,5,2
+4,6,2
+4,7,2
+4,8,2
+4,9,2
+4,10,2
+4,11,2
+5,1,2
+5,2,2
+5,3,2
+5,4,2
+5,5,2
+5,6,2
+5,7,2
+5,8,2
+5,9,2
+5,10,2
+5,11,2
+6,1,2
+6,2,2
+6,3,2
+6,4,2
+6,5,2
+6,7,2
+6,8,2
+6,9,2
+6,10,2
+6,11,2
+7,1,2
+7,2,2
+7,3,2
+7,4,2
+7,5,2
+7,6,2
+7,7,2
+7,8,2
+7,9,2
+7,10,2
+7,11,2
+8,1,2
+8,2,2
+8,3,2
+8,4,2
+8,5,2
+8,6,2
+8,7,2
+8,8,2
+8,9,2
+8,10,2
+8,11,2
+9,1,2
+9,2,2
+9,3,2
+9,4,2
+9,5,2
+9,6,2
+9,7,2
+9,8,2
+9,9,2
+9,10,2
+9,11,2
+10,1,2
+10,2,2
+10,3,2
+10,4,2
+10,5,2
+10,6,2
+10,7,2
+10,8,2
+10,9,2
+10,10,2
+10,11,2
+11,1,2
+11,2,2
+11,3,2
+11,4,2
+11,5,2
+11,6,2
+11,7,2
+11,8,2
+11,9,2
+11,10,2
+11,11,2
+```
 
+![](https://i.ibb.co/rw5pChV/1.png)
+
+```sh
 Ausgabe:
 Links,Rechts,Hoch,Runter,Links,Links,Hoch,Rechts,Links,Rechts,Links,Hoch,Rechts,Rechts,Links
 ,Rechts,Links,Hoch,Links,Hoch,Rechts,Hoch,Links,Rechts,Links,Rechts,Rechts,Runter,Runter,Hoc
@@ -532,225 +748,47 @@ h,Links,Links,Rechts,Links,Rechts,Runter,Rechts,Runter,Rechts,Rechts,Hoch,Links,
 Hoch,Rechts,Runter,Runter,Hoch,Hoch,Hoch,Hoch,Links,Runter,Hoch,Rechts,Hoch,Links,Runter,
 Hoch,Runter,Runter,Links,Links,Links,Rechts,Links,Hoch,Rechts,Rechts,Hoch,Links,Links,Rechts
 ,Links,Rechts,Rechts,Runter,Links,Runter,Links,
+```
+
+![](https://i.ibb.co/n8PmPSx/1.png)
+
+```sh
 3) Eingabe:
+14
+3,5,9
+3
+6,4,4
+5,12,10
+6,2,5
+```
 
-    1,3,
-    1,4,
-    1,5,
-    1,6,
-    1,7,
-    1,8,
-    1,9,
-    1,10,
-    2,1,
-    2,2,
-    2,3,
-    2,4,
-    2,5,
-    2,6,
-    2,7,
-    2,8,
-    2,9,
-    2,10,
-    3,1,
-    3,2,
-    3,3,
-    3,4,
-    3,5,
-    3,6,
-    3,7,
-    3,8,
-    3,9,
-    3,10,
-    4,1,
-    4,2,
-    4,3,
-    4,4,
-    4,5,
-    4,6,
-    4,7,
-    4,8,
-    4,9,
-    4,10,
-    5,1,
-    5,2,
-    5,3,
-    5,4,
-    5,5,
-    5,6,
-    5,7,
-    5,8,
-    5,9,
-    5,10,
-    6,1,
-    6,2,
-    6,3,
-    6,4,
-    6,5,
-    6,6,
-    6,7,
-    6,8,
-    6,9,
-    6,10,
-    7,1,
-    7,2,
-    7,3,
-    7,4,
-    7,5,
-    7,6,
-    7,7,
-    7,8,
-    7,9,
-    7,10,
-    8,1,
-    8,2,
-    8,3,
-    8,4,
-    8,5,
-    8,6,
-    8,7,
-    8,8,
-    8,9,
-    8,10,
-    9,1,
-    9,2,
-    9,3,
-    9,4,
-    9,5,
-    9,6,
-    9,7,
-    9,8,
-    9,9,
-    9,10,
-    10,1,
-    10,2,
-    10,3,
-    10,4,
-    10,5,
-    10,6,
-    10,7,
-    10,8,
-    10,9,
-    10,10,
-    2,9,
-    2,10,
-    2,11,
-    3,1,
-    3,2,
-    3,3,
-    3,4,
-    3,5,
-    3,6,
-    3,7,
-    3,8,
-    3,9,
-    3,10,
-    3,11,
-    4,1,
-    4,2,
-    4,3,
-    4,4,
-    4,5,
-    4,6,
-    4,7,
-    4,8,
-    4,9,
-    4,10,
-    4,11,
-    5,1,
-    5,2,
-    5,3,
-    5,4,
-    5,5,
-    5,6,
-    5,7,
-    5,8,
-    5,9,
-    5,10,
-    5,11,
-    6,1,
-    6,2,
-    6,3,
-    6,4,
-    6,5,
-    6,7,
-    6,8,
-    6,9,
-    6,10,
-    6,11,
-    7,1,
-    7,2,
-    7,3,
-    7,4,
-    7,5,
-    7,6,
-    7,7,
-    7,8,
-    7,9,
-    7,10,
-    7,11,
-    8,1,
-    8,2,
-    8,3,
-    8,4,
-    8,5,
-    8,6,
-    8,7,
-    8,8,
-    8,9,
-    8,10,
-    8,11,
-    9,1,
-    9,2,
-    9,3,
-    9,4,
-    9,5,
-    9,6,
-    9,7,
-    9,8,
-    9,9,
-    9,10,
-    9,11,
-    10,1,
-    10,2,
-    10,3,
-    10,4,
-    10,5,
-    10,6,
-    10,7,
-    10,8,
-    10,9,
-    10,10,
-    10,11,
-    11,1,
-    11,2,
-    11,3,
-    11,4,
-    11,5,
-    11,6,
-    11,7,
-    11,8,
-    11,9,
-    11,10,
-    11,11,
-    3,5,
-    6,4,
-    5,12,
-    6,2,
+![](https://i.ibb.co/jVgKbKP/1.png)
 
+```sh
 Ausgabe:
+```
 
+![](https://i.ibb.co/fMZQ3Xp/1.png)
+
+```sh
 4) Eingabe:
 100
 40,25,20
 0
+```
 
+![](https://i.ibb.co/RStm7yT/1.png)
+
+```sh
 Ausgabe:
 Links,Rechts,Links,Rechts,Links,Rechts,Links,Rechts,Links,Rechts,Links,Rechts,Links,Rechts,Lin
 ks,Rechts,Links,Rechts,Links,Rechts,
+```
 
+![](https://i.ibb.co/wQKkR6v/1.png)
+
+```sh
 5) Eingabe:
-
 20
 10,15,20
 34
@@ -789,118 +827,19 @@ ks,Rechts,Links,Rechts,Links,Rechts,
 4,17,1
 4,18,1
 4,19,1
+```
 
+![](https://i.ibb.co/HnxyLjK/1.pn)
+
+```sh
 Ausgabe:
+```
 
-17. Wichtigste Teile des Quellcodes
+![](https://i.ibb.co/1rbDXTk/1.png)
 
-Grundlegend sei gesagt, dass jede Methode mittels Javadoc. im Quellcode ausführlich dokumentiert
-wurde. Sollten sich hier bei den wichtigsten Codeabschnitten fragen ergeben, kann im Quellcode
-nachgeschaut werden. Die grafische Oberfläche wurde mit dem JavaFX Framework programmiert.
-Dies setze ich mit dem MVC(Model-View-Controller) Prinzip um. Die FXML-Datei wurde dabei
-mit dem externen Programm Scenebuilder bearbeitet.
-Der Button: „Lade Datei" ist mit der Methode ladeDatei in der Controller Klasse: GuiController
-verbunden. Nach dem Aufrufen der Methode wird mithilfe des FilChooser
-FileChooser dateiAuswaehlen = new FileChooser();
-File eingabe = dateiAuswaehlen .showOpenDialog(stage);
-eine Beispieldatei eingelesen und der setup-Methode: Stromrallye. startHeuristik übergeben_._
-Diese liest den Inhalt der Datei und wertet entsprechend ihre Daten aus. Mit:
-initMap2d = new int [ Mapsize ][ Mapsize ];
+### 2.b) Lösungsidee/Abstrakt:
 
-wird wie schon in Modellierung der Knoten angedeutet, das Spielfeld als 2D Array gespeichert. Die
-Batterien werden in der ArrayListe: bList gespeichert. Eine Batterie ist durch die Klasse Battery
-wie folgt aufgebaut:
-public Battery( int x, int y, int energy, int id, int sscid, boolean isDone, int
-geoGroup)
-Gleichzeigt beim Initialisieren der Batterien wird auch entsprechende initMap2d die ID
-zugewiesen: initMap2d [battery.getY()][battery.getX()] = i;
-Nachdem nun alles wichtige ausgewertet, gespeichert und auf Richtigkeit überprüft wurde, werden
-die in Generieren von Kanten besprochenen Kanten- bzw. LinkedListen:
-adj = new LinkedList[bSize + 1];
-externList = new LinkedList[bSize + 1];
-initialisiert. Mit der Methode GenerateEdges. genPosEdges werden nun alle Kanten mittels einer
-Breitensuche ermittelt. Die Besonderheit dieser Methode ist die Überprüfung auf Expendable, also
-auf die ganzen Ausnahmen, welche die Expandierfähigkeit der Kante bestimmen. Dies wird
-einerseits mit if-Abfragen, ob der aktuelle Knoten schon mal gefunden wurde(mit evtl. nur einem
-Schritt, was also auf Expandierfähigkeit schließen lässt, weil beim zweiten Fund es mindestens 3
-Schritte bedarf) oder bei v→ v bzw. e(v,v), wie viel Schritte es zu dem Ausgangsknoten bedarf. Jede
-Abfrage ist von weiteren Arrayboundsabfragen, wie z.B. if (( int )p[1] != (size - 1))
-für die Aktion Runter begleitet, da man natürlich nicht über der Array greifen will/darf. Die
-Breitensuche expandiert radial und fügt jeden neuen Node, dargestellt als Object[] posBattery
-einer Warteschlange: Queue<Object[]> queue = new LinkedList<>(); hinzu. posBattery
-besteht dabei aus 0 : x | 1 : y | 2 : Schritte | 3 : Weg.
-Die ermittelten Kanten, welche durch die Klasse Kante wie folgt aufgebaut sind:
-public Kante(int von, int nach, int kosten, boolean isExpendable)
-werden anschließend adj hinzugefügt. Anschließend wird mit SCC. generate die Strongly
-Connected Components, nach dem Algorithmus von Tarjan^15 ermittelt. Dabei werden diese global
-in dem Array: ArrayList<List> SCC = new ArrayList<List>();
-gespeichert. Folgend wird die in SZK und Geo-Gruppen beschriebene Distanzmatrix mit
-SCC. genEdgesSCC ,welche wie GenerateEdges. genPosEdges eine Breitensuche ist, für jede SCC
-Gruppe als int [][] SCCmatrix ; gespeichert. Letztlich für den Setup wird mit:
-int z = GenerateEdges. BFSSSC ( SCCmatrix , sumCalc, maxList .get(destination)[1],
-SCC. SCC .size(),destination);
-best = (z > best)? z : best;
-den maximalen Energiewert ermitteln und mit:
-GenerateEdges. genPosEdges ( initMap2d , Mapsize , posBatt2, best,
-bList .get(SCC. SCC .get(destination).get(i)).getId(), externList );
-die Externeliste erstellt. Wieder in GuiController.ladeDatei wird mit
-drawField(Stromrallye. Mapsize ); drawBatt(Stromrallye. Mapsize );
-Das grafische Feld im GUI erstellt. Der Button Start, ruft nun die Methode startAgenten auf,
-welche das Heuristische Verfahren startet. Die Methoden Helper.generateUnEvenMap und
-Helper. generateEvenMap sind die im Abschnitt Optimierung der Gruppierung beschriebenen
-Clusterverfahren. Grundlegend wird mit Schleifen wie:
-for ( int i = minSize; i < size; i = i + 3) {
-die Abschnitte durchsucht. Mit:
-Stromrallye. bList .get(initMap2d[x][i]).setGeoGroup(geoGruppe);
-wird der Batterie die entsprechende Gruppe zugewiesen. Die Anzahl an Gruppen, spiegelt sich in
-der Ganzzahl Stromrallye. geoGruppe wieder. Die ist die Vorverarbeitung beendet und die
-Heuristik InformedHeuristik13. initGraph wird aufgerufen. Der in
-OpenList/Zustandsspeicherung beschriebene Zustand, wird als Objektarray
-Object[] agent dargestellt. Der beschriebene Bergsteigeralgorithmus manifestiert sich durch:
-
-15 https://en.wikipedia.org/wiki/Tarjan
-%27s_strongly_connected_components_algorithm
-
-ArrayList<PriorityQueue<Object[]>> Bergsteiger mit:
-PriorityQueue<Object[]> OpenLists
-Die schon vorgestellt Kostenfunktion vergleicht mit einer Costume Comparator Methode:
-sortPriorityQueue
-return (Helper. isGeoDone ((ArrayList) arg0[4], Stromrallye. geoGruppe ) <
-Helper
-
-. isGeoDone ((ArrayList) arg1[4], Stromrallye. geoGruppe ))? -1
-: ( sccGroup == ((ArrayList) arg0[4]).get(( int )
-arg0[0]).getGeoGroup())? -1 : 1;
-die Zustände. Helper.isGeoDone testet dabei lediglich wie viel Gruppen des Clusterverfahrens
-abgearbeitet wurden und gibt den entsprechenden integer Wert zurück. Anschließend wird mit:
-for ( int i = 0; i < Stromrallye. adj [0].size(); i++) {
-Kante k = Stromrallye. adj [0].get(i);
-int x = (k.isExpendable())? ( initAgentBatt ) : k.getKosten() + 1;
-for ( int iy = k.getKosten(); iy <= x; iy = iy + 2) {
-jede Kante, einschließenlich deren Expandierte Form(en) durchgegangen und nach einer
-Überprüfung nach dem SCC-DeadEnd Verfahren, wie beschrieben überprüft. Die Methode
-addQueueItem(k.getNach(), newBatt, initMaxBattery - iy, (LinkedList[])
-agent[3], (ArrayList) agent[4], ( int [][]) agent[5], "0-" + k.getNach() +
-"-" + iy + ",", iy, stageID );
-ist dazu Zuständig, dass der gültige Zustand zum entsprechenden PQ-Level^16 hinzugefügt wird.
-Dies wird grundlegend in kleiner Abänderung in startHeuristik für jeden Zustand wiederholt,
-bis ein Ergebnis oder keines gefunden wurde. Um nicht in einer Suche ewig stecken zu bleiben,
-wird, dass beschriebene Beamlimit mit:
-beamSearch ++;
-if ( beamSearch == beamLimit ) {
-beamSearch = 0;
-break BeamSearch;
-}
-benutzt. Damit jeder gültiger Zustand von der Heuristik überprüft wird, gibt es die Methode:
-public static boolean testfkt() {
-welche alle Stufen des Bergsteigeralgorithmus überprüft. Wurde ein Weg gefunden, wird er in dem
-String: Bewegungsabfolge in Stromrallye gespeichert, wo er dann grafisch bzw. als Aktion
-umgesetzt wird. Dies gehört jedoch eher zur Implementierung der grafischen Oberfläche, was für
-die Implementierung des Aufgabenteiles an sich irrelevant ist.
-
-2.b) Lösungsidee/Abstrakt:
-
-1. Abstrakt
+#### 2.1. Abstrakt
 
 In diesem Teil der Aufgabenstellung, geht es darum, eigene lösbare Spielfelder für den Benutzer zu
 erschaffen. Dieser kann die Schwierigkeit des Feldes anhand der Checkboxen(rechtsoben)
@@ -908,7 +847,7 @@ auswählen. Diese Unterscheiden sich untereinander, anhand von verschiedenen Att
 Faktoren. Es gilt, dass der Benutzer den Roboter mithilfe der Tastatur, aber zudem auch mit den
 Pfeil-Buttons steuern kann.
 
-2. Definition
+#### 2.2. Definition
 
 Es gibt 4 verschiedene Schwierigkeitsstufen, welche: „Leicht, Mittel, Schwer und Sehr Schwer"
 lauten. Jede Schwierigkeit soll anhand von Parametern definiert werden, welche im Abschnitt
@@ -918,9 +857,9 @@ Feldes benötigt wird.
 
 16 Oder auch Station
 
-3. Paramter
+#### 3. Paramter
 
-1) Bildet die Größe des Spielfeldes. Die Größe ist zwar unabhängig von der Schwierigkeit, jedoch
+  -  Bildet die Größe des Spielfeldes. Die Größe ist zwar unabhängig von der Schwierigkeit, jedoch
 dient sie hier der Übersichtswillen als Schwierigkeit. Verbunden mit anderen Parametern, wird
 ersichtlicher, warum dies nichtnur der Dichtenswillen wichtig ist.
 Leicht: 5-10
@@ -929,14 +868,14 @@ Schwer: 8-16
 Sehr Schwer: 9-22
 → Dabei wird eine Größe in dem Intervall zufällig mit gleicher Gewichtung für jede Zahl bestimmt.
 
-2) Mindestanzahl an Batterien auf dem Spielfeld.
+  - Mindestanzahl an Batterien auf dem Spielfeld.
 Leicht: 4
 Mittel: 6
 Schwer: 7
 Sehr Schwer: 8
 → Dieser Parameter hängt unmittelbar mit 3) und 4) zusammen.
 
-3) Prozentzahl, zu wie viel Prozent noch eine weitere Batterie generiert werden soll. Dieser
+  - Prozentzahl, zu wie viel Prozent noch eine weitere Batterie generiert werden soll. Dieser
 Parameter tritt jedoch erst nach der Mindestanzahl von 2) in Kraft.
 Leicht: 70%
 Mittel: 75%
@@ -945,7 +884,7 @@ Sehr Schwer: 100%
 → Hat zur Folge, dass je schwerer es wird, desto mehr Batterien, mit eine erhöhten
 Wahrscheinlichkeit einer Komplexität können generiert werden.
 
-4) Gegenstück zum dritten Parameter, er ist die Prozentanzahl, wie viel pro weiterer Batterie von
+  - Gegenstück zum dritten Parameter, er ist die Prozentanzahl, wie viel pro weiterer Batterie von
 dem dritten Parameter abgezogen werden soll.
 Leicht: 30%
 Mittel: 20%
@@ -954,7 +893,7 @@ Sehr Schwer: 7%
 → Dies hat natürlich zur Folge, dass nicht das ganze Feld mit je einer Batterie bedeckt ist. Jedoch
 wurde dieser Parameter bewusst eingesetzt, um einseitige Muster(volles Feld) zu vermeiden.
 
-5) Senkt die Möglichkeiten, durch einen Faktor, welcher von 3) Prozente in Relation zu der
+  - Senkt die Möglichkeiten, durch einen Faktor, welcher von 3) Prozente in Relation zu der
 generierten Batterienergie abzieht. Der Faktor spiegelt sich in der Formel:
 Faktor(3) = (Faktor(3))-(energieFaktor(5)/(sizesize)) wieder.
 Leicht: 20
@@ -964,17 +903,16 @@ Sehr Schwer: 5
 → Dies schränkt die Wahrscheinlichkeit ein, dass ein Spielfeld nur reines Herumwandern(riesige
 Energienanzahlen) ist und trägt konsequenterweise auch zur Komplexität bei.
 
-6) Bestimmt, zu wie viel Prozent eine Ersatzbatterie mehrmals befahren werden soll.
+  - Bestimmt, zu wie viel Prozent eine Ersatzbatterie mehrmals befahren werden soll.
 Leicht: 40
 Mittel: 65
-
 Schwer: 75
 Sehr Schwer: 120
 → Dies hat nicht nur zur Folge, dass man auch in Betracht ziehen muss, in eine Batterie mehrmals
 zu fahren(mehr Möglichkeiten), sondern stellt verbunden mit den Parametern 10) & 11) , nochmals
 eine extra Schwierigkeit dar.
 
-7) Prozentzahl, dass Muster in dem Spielfeld entstehen sollen. Dies manifestiert sich bspw. In
+  - Prozentzahl, dass Muster in dem Spielfeld entstehen sollen. Dies manifestiert sich bspw. In
 gleicher Energienanzahl, zweier folgender Batterien.
 Leicht: 30
 Mittel: 15
@@ -984,7 +922,7 @@ Sehr Schwer: 2
 nächstes Befahren werden muss und 2. können dadurch mehrerer Ergebnisse, bzw. Wege zum Ziel
 führen.
 
-8) Faktor, die letzte Ersatzbatterie im Vorhinein zu bestimmen, also je höher dieser Faktor ist, desto
+  - Faktor, die letzte Ersatzbatterie im Vorhinein zu bestimmen, also je höher dieser Faktor ist, desto
 höher bzw. niedriger wird die Energie der Ersatzbatterie. Wobei diese natürlich nur optimal ist. Der
 Weg ist keinesfalls immer absolut.
 Leicht: 3
@@ -994,21 +932,21 @@ Sehr Schwer: 1
 → Die letzte Batterie wird hier durch den Faktor geteilt, was zu dem oben beschriebenen Effekt
 führt.
 
-9) Wahrscheinlichkeit, dass eine Ersatzbatterie sich selbst anfährt.
+  - Wahrscheinlichkeit, dass eine Ersatzbatterie sich selbst anfährt.
 Leicht: 0
 Mittel: 15
 Schwer: 20
 Sehr Schwer: 35
 → Dadurch entstehen noch mehr Möglichkeiten.
 
-10) Wahrscheinlichkeit, dass man auch mehr als nur dass Minimum von v → v' nehmen muss.
+  -  Wahrscheinlichkeit, dass man auch mehr als nur dass Minimum von v → v' nehmen muss.
 Leicht: 50
 Mittel: 80
 Schwer: 90
 Sehr Schwer: 100
 → Stellt vor allem in großen Feldern(schwereren) eine extra Schwierigkeit dar.
 
-11) Maximale Anzahl an extra Schritten.
+  -  Maximale Anzahl an extra Schritten.
 Leicht: 4
 Mittel: 6
 Schwer: 8
@@ -1016,20 +954,20 @@ Sehr Schwer: 10
 → Kann vor allem in kleinen Feldern, eine große Rolle spielen, da verbunden mit 8) sehr viel
 Auswahl herrscht.
 
-12) Gegenwert zum Parameter 7) , wie viel Prozent von 3) abgezogen werden soll.
+  - Gegenwert zum Parameter 7) , wie viel Prozent von 3) abgezogen werden soll.
 Leicht: 30
 Mittel: 20
 Schwer: 15
 Sehr Schwer: 10
 → Die Anordnung ist hierbei theoretisch egal.
 
-13) Gegenwert zum Parameter 6 ) , wie viel Prozent von 3) abgezogen werden soll.
+  - Gegenwert zum Parameter 6 ) , wie viel Prozent von 3) abgezogen werden soll.
 Leicht: 30
 Mittel: 20
 Schwer: 20
 Sehr Schwer: 10
 
-14) Faktor von Gruppenbildung. Dass wenn große Batterie im Vergleich zum Feld, das dann danach
+  - Faktor von Gruppenbildung. Dass wenn große Batterie im Vergleich zum Feld, das dann danach
 kleiner, was den Suchraum kleiner und somit einfacher macht.
 Leicht: 0.25
 Mittel: 0.75
@@ -1038,12 +976,11 @@ Sehr Schwer: 2
 → Faktor entsprechend in Relation zur Spielfeldgröße k. Dabei wird 14) immer bei
 v.energie >=k*Faktor ausgelöst.
 
-4. Generieren des Feldes
+#### 2.4. Generieren des Feldes
 
 Zur Repräsentation des Feldes wird grundlegend wie im Aufgabenteil a) auch ein 2D Array
-verwendet. Ähnlich wie bei den Maze-Generating Algorithmen habe ich mich hier für einen
-rückwährtslaufenden Algorithmus entschieden^17. Das Spielfeld wird also rückwärts erstellt. Dies
-war vor allem wegen dem Parameter der Mehrfachbetretung einer Batterie von Nöten. Bei dem
+verwendet. Ähnlich wie bei den [Maze-Generating Algorithmen habe ich mich hier für einen
+rückwährtslaufenden Algorithmus entschieden](https://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking). Das Spielfeld wird also rückwärts erstellt. Dies war vor allem wegen dem Parameter der Mehrfachbetretung einer Batterie von Nöten. Bei dem
 rückwährtslaufenden Generieren sind die zu befahrenen Batterien nämlich schon da. Der Array wird
 zunächst mit nullen gefüllt, was die leere Map darstellen soll. Wenn der Benutzer nun eine
 Schwierigkeit auswählt und auf „Generieren" klickt, werden die Parameter dem Algorithmus
@@ -1066,46 +1003,55 @@ befahren wird, dass mehr Batterien bei bedarf generiert werden können. Ist 3) f
 neue Batterie mehr generiert werden, wird die letzte erstellte Batterie grün markiert(sowie mit der
 ID: 1 im Array) und als Startpunkt festgelegt. Während der ganzen Prozedur, wird der gegangene
 
-17 https://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking
 
 Weg gespeichert, um dem Benutzer (siehe GUI ) z.B. einen Tipp zu geben. Der Benutzer kann nun
 versuchen, das generierte Spielfeld zu lösen.
 
-5. Darstellung der Lösung
+#### 5. Darstellung der Lösung
 
 Hat der Benutzer erfolgreich alle Batterien nach den Kriterien der Aufgabe „abgearbeitet", so
 erscheint die folgende Nachricht:
 
+![](https://i.ibb.co/r7C8C3j/1.png)
+
 Ist dem Roboter die Energie jedoch vorher ausgegangen, wird dem Benutzer die Nachricht:
+
+![](https://i.ibb.co/FhP7nhK/1.png)
 
 angezeigt. Bei beiden Fällen kann der Benutzer anschließend den Roboter logischerweise nicht
 mehr bewegen und muss das Spielfeld mit dem Knopf: „<---" bzw. „Anfang" zurücksetzen.
 
-6. GUI
+#### 2.6. GUI
 
 Die Grafischoberfläche bietet zudem noch die Option für den Benutzer, sich einen Tipp einzuholen.
 
+![](https://i.ibb.co/nDyMjrd/1.png)
+
 Nach Betätigen des Buttons: „Tipp", kommt folgendes Fenster hervor:
 
-7. Beispiele
+### 2.7. Beispiele
+#### 2.8. Leicht
+Eingabe:
 
-8. Leicht Eingabe:
+![](https://i.ibb.co/ZgjWRQH/1.png)
 
 Lösung:
 Rechts,Runter,Runter,Runter,Rechts,Hoch,Links,Links,Runter,Links
 
-9. Mittel
-
+#### 9. Mittel
 Eingabe:
+
+![](https://i.ibb.co/QrJnz9y/1.png)
 
 Lösung:
 Hoch,Links,Links,Links,Links,Runter,Runter,Runter,Hoch,Runter,Hoch,Runter,Rechts,Rechts,Rech
 ts,Rechts,Runter,Rechts,Hoch,Hoch,Hoch,Hoch,Links,Links,Rechts,
 Rechts,
 
-10. Schwer
-
+#### 2.10. Schwer
 Eingabe:
+
+![](https://i.ibb.co/fp2M8xG/1.png)
 
 Lösung:
 Runter,Runter,Hoch,Runter,Runter,Links,Links,Links,Hoch,Hoch,Runter,Hoch,Runter,Hoch,Runter
@@ -1114,11 +1060,13 @@ Hoch,Runter,Hoch,Runter,Hoch,Runter,Runter,Runter,Runter,Links,Links,Links,Links
 Rechts,Rechts,Rechts,Rechts,Hoch,Hoch,Hoch,Hoch,Hoch,Hoch,Hoch,Links,Links,Runter,Runter,
 Hoch,Runter,Hoch,Runter,Runter,Runter,Runter,Runter,Runter,Rechts,Runter,Runter,Runter,
 
-11. Sehr Schwer
+#### 2.11. Sehr Schwer
 
-Eingabe:(Anmerkung: Wie schon in Aufgabenteil a) gesagt, gibt es hierfür die Option: mit der
+[Eingabe:](www.google.de "Anmerkung: Wie schon in Aufgabenteil a) gesagt, gibt es hierfür die Option: mit der
 Maus über die Batterie zu fahren und entsprechend den Wert zu bekommen, falls er wie hier nicht
-so gut zu erkennen ist)
+so gut zu erkennen ist")
+
+![](https://i.ibb.co/ZgQjGFz/1.png)
 
 Lösung:
 Runter,Runter,Hoch,Runter,Runter,Runter,Runter,Runter,Runter,Runter,Links,Links,Links,Links,Li
@@ -1131,55 +1079,3 @@ unter,Runter,Hoch,Runter,Hoch,Runter,Hoch,Runter,Runter,Runter,Runter,Hoch,Recht
 hts,Links,Links,Rechts,Links,Rechts,Links,Links,Links,Links,Links,Links,Links,Links,Hoch,Hoch,
 Hoch,Hoch,Hoch,Hoch,Hoch,Hoch,Rechts,Rechts,Rechts,Rechts,Rechts,Rechts,Rechts,Rechts,Rec
 hts,Rechts,Rechts,Rechts,Rechts,
-
-12. Wichtigste Teile des Quellcodes
-
-Mit der Methode genField wird eine neue 2D Map angelegt: int [][] map und die Schwierigkeit
-wird anhand von Abfragen überprüft und anschließend werden die entsprechenden Parameter
-der Methode generateField übergeben. Diese übernimmt die ersten Schritte, das Feld zu
-initialisieren/zeichnen und errechnet mit:
-int posX = ThreadLocalRandom. current ().nextInt(0, size);
-int posY = ThreadLocalRandom. current ().nextInt(0, size);
-den Start und mit
-int randX = ThreadLocalRandom. current ().nextInt((-posX / hardlastNode), (((size
-
-    posX) - 1) / hardlastNode));
-    int randY = ThreadLocalRandom. current ().nextInt((-posY / hardlastNode), (((size
-    posY) - 1) / hardlastNode));
-    den Endpunkt. hardlastNode ist dabei der Faktor 8). mit
-    while (randX == 0 && randY == 0)wird schließlich noch garantiert, dass die Endposition nicht
-    die Startposition darstellt(Weil sonst die Energie = 0 wäre, was zu einem ungültigen Feld führen
-    würde). Wenn randX = negativ, dann heißt dass, dass der Roboter nach links geht. Bei positiv nach
-    Rechts. Bei randY dasselbe. Mit map[posX + randX][i] = -1;wird sichergestellt, dass an dieser
-    Stelle, wie schon erläutert keine neue Batterie generiert wird. Nachdem nun die erste Batterie auf
-    dem Feld ist, wird die Methode generateBatts aufgerufen, welche die restlichen Batterien anhand
-    der Faktoren und Parameter generiert. Alle Wahrscheinlichkeiten werden mit der Random random =
-    new Random(); Funktion erstellt. Dabei wird eine „zufällige" Zahl perc =
-    random.nextInt(100); zwischen 0-100 generiert. Diese wird dann, wie bspw.
-    if (perc > percnotDone)mit dem entsprechenden Parameter verglichen. Jede neue Batterie wird
-    nach dem oben genannten Prinzip erstellt. Ist jedoch einmal eine andere Batterie im Weg, wird bei
-    gegebenen Parameter ein alternativer Weg gesucht, mit der Methode testValid oder wenn 6) dann
-    wird die im Weg stehende Batterie befahren und entsprechend ihre Batterie mit dem Weg von
-    v→ v' aktualisiert.
-    bListinit .get(Helper. findBattbyKoord ((posX + randX), i,
-    bListinit )).setEnergy(energie);. Die sich in der im Weg befindene Energie wird
-    anschließend in dem Integer energieholder bewahrt mit
-    energieholder = Integer. parseInt (batterieText.getText());und den noch zu machenden
-    Schritten, bis zur Zielposition hinzuaddiert. Wenn die minimale Anzahl an Batterien 2)
-    überschritten und Parameter 3) sagt, dass keine neuen Batterien mehr generiert werden sollen, wird
-    die letzte Batterie durch
-    Ellipse e = (Ellipse) getBatt( letztery , letzterx , map2D, 2);
-    e.setFill(Color. GREEN );
-    und
-    Battery agent = new Battery( letzterx , letztery , Integer. parseInt (t.getText()),
-    0, 0, false , 0); bListinit .set(0, agent);
-    zum Robot gemacht. Der Finale, bzw. von dem Algorithmus verwendete Weg, wird in dem String:
-    Bewegungsabfolge gespeichert. Da das Spielfeld rückwärts erstellt wird, werden die
-    Bewegungsrichtungen vor dem String gepackt, wie z.B. bei einer Horizontalen Aktion:
-    Bewegungsabfolge = ((randX < 0)? ",Rechts" : ",Links") + Bewegungsabfolge ;
-    Der Roboter kann grundlegend mit den Funktionen geheHoch(), geheRunter(), geheRechts(),
-    geheLinks() vom User per Key Event: Main. scene .setOnKeyPressed gesteuert werden. Auch
-    hier gilt, dass die restlichen Methoden zur GUI-Verwaltung eher weniger mit der aktuellen
-    Aufgabenstellung zu tun haben, weshalb hier nicht mehr weiter darauf eingegangen wird.(Die
-    Methoden sind jedoch trotzdem alle kommentiert, siehe Javadoc. bzw. Methodendoc.)
-
