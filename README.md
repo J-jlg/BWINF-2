@@ -1,10 +1,10 @@
 # 38. Bundeswettbewerb Informatik
 ## 2. Runde
 
-> Teilnehmer: Jan-Luca Gruber
-> Betreuer: Frank Schell, Friedrich-Hecker-Schule Sinsheim
-> Programmiersprache: Java
-> Entwicklungsumgebung: Eclipse
+> Teilnehmer: Jan-Luca Gruber  
+> Betreuer: Frank Schell, Friedrich-Hecker-Schule Sinsheim  
+> Programmiersprache: Java  
+> Entwicklungsumgebung: Eclipse  
 
 ### 1.a) Lösungsidee/Abstrakt:
 
