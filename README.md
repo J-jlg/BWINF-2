@@ -55,7 +55,7 @@ Knoten V(siehe Abbildung 1 für Bsp: 1).
 
 mit
 
-> E<sub>0</sub> := ∅ 
+> E<sub>0</sub> := ∅  
 |V| := Anzahl an Ersatzbatterien + dem der Agentenbatterie.
 
 Die Laufzeit für das Durchsuchen der Knoten, welches später oft durchgeführt und
