@@ -53,7 +53,8 @@ Knoten V(siehe Abbildung 1 für Bsp: 1).
 
 mit
 
-> E<sub>0</sub> := ∅ und |V| := Anzahl an Ersatzbatterien + dem der Agentenbatterie.
+> E<sub>0</sub> := ∅ 
+|V| := Anzahl an Ersatzbatterien + dem der Agentenbatterie.
 
 Die Laufzeit für das Durchsuchen der Knoten, welches später oft durchgeführt und
 somit eine große Rolle spielt, reduziert sich also von 
@@ -85,10 +86,10 @@ folgende Operator Expandieren bezieht sich auf das heuristische Erweitern eines 
 | Dynamischer Graph |  Statischer Graph |
 :-------------------------:|:-------------------------:
 ![](https://i.ibb.co/88YH2k8/unb2.png)  |  ![](https://i.ibb.co/QmsV0r8/unb3.png)
-Vorteile: | Vorteile:
+`Vorteile:` | `Vorteile:`
 -Expandiert nicht zu fertigen Nodes, da es zu diesen logischerweise keine Kanten gibt. Somit werden Abfragen reduziert | keine delete → O(m[n])→ Alle Kanten, des Knoten v, da eine Linked List als Datenstruktur gewählt wurde.|
 -Gruppierung möglich | insert Operationen → O(1)
--weniger Kanten und somit auch schnellere Laufzeit, da `|E|<sub>dynamisch</sub>  <= |E|<sub>statisch</sub>` | -pro Expansion muss lediglich V gespeichert werden, da E immer gleich bleibt. 
+-weniger Kanten und somit auch schnellere Laufzeit, da |E|<sub>dynamisch</sub>  <= |E|<sub>statisch</sub> | -pro Expansion muss lediglich V gespeichert werden, da E immer gleich bleibt. 
 -insert Operation → O(1)  |  
 `Nachteile:` | `Nachteile:`
 -delete → O(m[n]) → w.c. | -Graph benötigt mehr Speicher, da
