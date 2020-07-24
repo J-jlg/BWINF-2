@@ -89,58 +89,22 @@ folgende Operator Expandieren bezieht sich auf das heuristische Erweitern eines 
 `Vorteile:` | `Vorteile:`
 -Expandiert nicht zu fertigen Nodes, da es zu diesen logischerweise keine Kanten gibt. Somit werden Abfragen reduziert | keine delete → O(m[n])→ Alle Kanten, des Knoten v, da eine Linked List als Datenstruktur gewählt wurde.|
 -Gruppierung möglich | insert Operationen → O(1)
--weniger Kanten und somit auch schnellere Laufzeit, da |E|<sub>dynamisch</sub>  <= |E|<sub>statisch</sub> | -pro Expansion muss lediglich V gespeichert werden, da E immer gleich bleibt. 
--insert Operation → O(1)  |  
+-weniger Kanten und somit auch schnellere Laufzeit, da \|E\|<sub>dynamisch</sub>  <= \|E\|<sub>statisch</sub> | -pro Expansion muss lediglich V gespeichert werden, da E immer gleich bleibt. 
+-insert Operation → O(1)  |  -
 `Nachteile:` | `Nachteile:`
--delete → O(m[n]) → w.c. | -Graph benötigt mehr Speicher, da
-`|E|<sub>statisch</sub> >= |E|<sub>dynamisch</sub>`
+-delete → O(m[n]) → w.c. | -Graph benötigt mehr Speicher, da\| E\|<sub>statisch</sub> >= \|E\|<sub>dynamisch</sub>
+-pro Expansion muss V+E gespeichert werden, da die Parameter des Graphen Gzustand, für jeden Pfad einzigartig sind. | -Benötigt mehr Laufzeit, da schließlich Kanten, selbst wenn der Knoten „fertig" ist, bleiben. → min O(1) pro Expansion.
+- | hat keine ersichtliche Methode zum Gruppieren
+- | Graph kann zumindest im average case nicht sinnvoll unterteilt bzw. vereinfacht werden.
+- | Es muss viel vorverarbeitet werden, da in dem Node 3(siehe bsp. oben) auch die Energie 6 reingehen würde, wegen 0→3. Es muss also für jeden Node die maximale Energie gefunden werden.
 
--insert Operation → O(1)
--insert Operation → O(1)  |  ![](https://cldup.com/dTxpPi9lDf.thumb.png)
-![](https://cldup.com/dTxpPi9lDf.thumb.png)  |  ![](https://cldup.com/dTxpPi9lDf.thumb.png)
-
-
-
- 
-
-
-
-Vorteile:
--keine delete → O(m[n])→ Alle Kanten, des
-Knoten v, da eine Linked List als Datenstruktur
-gewählt wurde.
--insert Operationen → O(1)
--pro Expansion muss lediglich V gespeichert
-werden, da E immer gleich bleibt.
-
-Nachteile:
--delete → O(m[n]) → w.c.
--pro Expansion muss V+E gespeichert werden,
-da die Parameter des Graphen Gzustand, für jeden
-Pfad einzigartig sind.
-
-Nachteile:
--Graph benötigt mehr Speicher, da
-|E|statisch >= |E|dynamisch
--Benötigt mehr Laufzeit, da schließlich Kanten,
-selbst wenn der Knoten „fertig" ist, bleiben. →
-min O(1) pro Expansion.
--hat keine ersichtliche Methode zum Gruppieren
--Graph kann zumindest im average case nicht
-sinnvoll unterteilt bzw. vereinfacht werden.
--Es muss viel vorverarbeitet werden, da in dem
-Node 3(siehe bsp. oben) auch die Energie 6
-reingehen würde, wegen 0→3. Es muss also für
-jeden Node die maximale Energie gefunden
-werden.
-
-Ich habe mich in diesem Fall für den vollen dynamischen Graphen^4 entschieden(insert + deletion),
+Ich habe mich in diesem Fall für den [vollen dynamischen Graphen](https://www.geeksforgeeks.org/dynamic-connectivity-set-1-incremental/) entschieden(insert + deletion),
 da vor allem die folgenden Gruppierungen(siehe SZK und Geo-Gruppen ), massiv Expandierungen
 reduzieren. Es gilt die Heuristik so schlau bzw. informiert wie möglich Expandieren zu lassen, also
 nur die best möglichen Wege zu gehen. Denn eine uninformierte Suche wäre reines Bruteforce.
 (siehe SZK und Geo-Gruppen Bruteforcevergleich)
 
-3. Generieren der Kanten
+#### 3. Generieren der Kanten
 
 Da nun die Datenstruktur für die Knoten sorgfältig gewählt wurde, gilt es die Kanten e E von G∈ init
 zu generieren, wobei Ginit den dynamischen Ausgangsgraph darstellen soll.(siehe oben links
@@ -150,13 +114,8 @@ Kosten geben kann(Multigraph), wie in dem Beispiel oben, von dem Agent mit der I
 0→3(x:5,y:4) kann die Kante k quasi jede Kosten von dem kürzesten Pfad(3 Schritte) bis
 Agentenbatterie von dem minimum ausgehend immer plus zwei haben.
 
-4 https://www.geeksforgeeks.org/dynamic-connectivity-set-1-incremental/
+> \sum_{i=1}^n min(v->v')+(i*2)
 
-∑
-i = 1
-
-n
-min ( v→v' )+( i ∗ 2 )
 
 Um jetzt nicht jede einzelne Kante in dem dynamischen Graphen, der schließlich für eine
 Reduzierung der Kanten gedacht ist in dem Graph abzubilden, wird nur der kürzeste Pfad von
