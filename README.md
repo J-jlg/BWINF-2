@@ -150,7 +150,7 @@ logischerweiße keine Kante(n) hat.
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
 ![](https://i.ibb.co/94bBTNq/1.png)  |  ![](https://i.ibb.co/PT3rN0h/2.png) | ![](https://i.ibb.co/52D524R/3.png) | ![](https://i.ibb.co/j3tvzt7/4.png)
 
-Folgende Beispiele beweisen/zeigen auf, warum diese zwei Überprüfungen von Nöten sind:
+Folgende Beispiele beweisen/zeigen auf, warum diese zwei Überprüfungen von Nöten sind:  
 ![](https://i.ibb.co/d7Pjg3Y/1.png)  
 ![](https://i.ibb.co/7YnVFwN/2.png)
 Wie schon angedeutet, wird jede Kante mittels einer Breitensuche ermittelt. Dies stellt sich als
@@ -265,6 +265,7 @@ Graphen:
 | Vorher |  Nachher | 
 :-------------------------:|:-------------------------:|
 ![](https://i.ibb.co/fxh1q8m/3.png)  |  ![](https://i.ibb.co/h7RWQ07/4.png) |
+
 aufgeteilt. Sinn und Zweck dieser Blöcke ist es, wie auch schon bei Ansatz (I), die Anzahl V und
 somit auch die Expansionen von Ginit drastisch zu reduzieren. So kann man z.B. bei einer geraden
 Anzahl an Knoten im k*k Feld: |Vneu| = |V<sub>alt</sub>|/4. Geht man einen Schritt weiter, so könnte man immer
