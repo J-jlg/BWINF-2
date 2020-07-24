@@ -28,7 +28,7 @@ G := (V, E),
 
 mit V := Menge von Batterien und E := Menge von Kanten, reduziert. Kante 
 ```sh
- e∈E mit e(v, v') bzw. e(v, v)  <sub>1</sub>
+ e∈E mit e(v, v') bzw. e(v, v)
 ```
 ist dabei eine zusammengefasste Mehrfachkante, worauf in Generieren der Kanten weiter eingegangen
 wird. Durch Benutzung eines Graphen kann man den Roboter zielstrebig von Batterie zu Batterie
@@ -39,8 +39,10 @@ schicken, was massiv Wege also Rechenleistung erspart.
 
 Für jede Ersatzbatterie 
 ```sh
- v<sub>1</sub> ∈ V ... v<sub>n</sub> ∈ V,   
+ v1 ∈ V ... v<sub>n</sub> ∈ V,   
 ```
+
+> <sub>0</sub>
 
 sowie für den Agenten
 ```sh
