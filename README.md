@@ -22,14 +22,14 @@ lediglich nach oben, unten, rechts und links jeweils einen Schritt bewegen. Pro 
 wird seine Ladung um eins reduziert. Folgend werden durch die weiteren Zeilen die Ersatzbatterien
 definiert und auf das Feld übertragen. Um nun den Roboter nicht wild durch die Gegend rennen zu
 lassen, wird die 2d Map auf einen gerichtet- und gewichteten Multigraphen 
-```sh
-G := (V, E), 
-```
+
+> G := (V, E), 
+
 
 mit V := Menge von Batterien und E := Menge von Kanten, reduziert. Kante 
-```sh
- e∈E mit e(v, v') bzw. e(v, v)
-```
+
+> e∈E mit e(v, v') bzw. e(v, v)
+
 ist dabei eine zusammengefasste Mehrfachkante, worauf in Generieren der Kanten weiter eingegangen
 wird. Durch Benutzung eines Graphen kann man den Roboter zielstrebig von Batterie zu Batterie
 schicken, was massiv Wege also Rechenleistung erspart.
@@ -39,44 +39,38 @@ schicken, was massiv Wege also Rechenleistung erspart.
 
 Für jede Ersatzbatterie 
 
-> v<sub>1</sub> ∈ V ... v <sub>n</sub> ∈ V,   
+> v<sub>1</sub> ∈ V ... v<sub>n</sub> ∈ V,   
 
 sowie für den Agenten
-```sh
- v<sub>0</sub> ∈ V gilt: v∈V:v ∈S bzw. V ⊆S. 
-```
+
+> v<sub>0</sub> ∈ V gilt: v∈V:v ∈S bzw. V ⊆S. 
+
 
 Diese Prozedur führt in Bsp: 1,4,5,6 zu einer massiven Verkleinerung des Spielfeldes bzw. der
 Knoten V(siehe Abbildung 1 für Bsp: 1).
-```sh
- G<sub>0</sub> (Graph <sub>r</sub>) = (V<sub>anzBatt</sub>, E<sub>0</sub>)
-```
-mit
-```sh
-E<sub>0</sub> := ∅ und |V| := Anzahl an Ersatzbatterien + dem der Agentenbatterie.
-```
 
-This is some <sup>superscript</sup> text.
-This is some <sub>superscript</sub> text.
+> G<sub>0</sub> (Graph<sub>r</sub>) = (V<sub>anzBatt</sub>, E<sub>0</sub>)
+
+mit
+
+> E<sub>0</sub> := ∅ und |V| := Anzahl an Ersatzbatterien + dem der Agentenbatterie.
 
 Die Laufzeit für das Durchsuchen der Knoten, welches später oft durchgeführt und
 somit eine große Rolle spielt, reduziert sich also von 
 > O(k*k) -> O(n).
 
-Wobei für die Anzahl Knoten
-n gilt: n <= kk. Der Fall n = kk(zudem auch n ≈ k) wird später im Abschnitt: SZK und Geo-
-Gruppen behandelt. Um nun die einzelnen Batterien entsprechend zu identifizieren, bekommt jede
-Batterie, inklusive der des Agenten(grün) eine Nummer/Index zugewiesen. Der Agent bekommt die
-Nummer 0, während die anderen nach Inputreihenfolge sortiert werden. Jedes Objekt der Klasse
-Batterie, besitzt entsprechend x und y Koordinate im kk Feld, Anzahl an Energie, ein Boolean, zur
+Wobei für die Anzahl Knoten n gilt: 
+> n <= k*k.
+
+Der Fall n = kk(zudem auch n ≈ k) wird später im Abschnitt: SZK und Geo-Gruppen behandelt. Um nun die einzelnen Batterien entsprechend zu identifizieren, bekommt jede Batterie, inklusive der des Agenten(grün) eine Nummer/Index zugewiesen. Der Agent bekommt die Nummer 0, während die anderen nach Inputreihenfolge sortiert werden. Jedes Objekt der Klasse Batterie, besitzt entsprechend x und y Koordinate im kk Feld, Anzahl an Energie, ein Boolean, zur
 Überprüfung, ob die Batterie abgearbeitet wurde. Wobei gilt:
-{v|vindex.energie=0}→vindex.isDone=true. S wird in einem zweidimensionalen Array
-gespeichert(siehe Generieren der Kanten ) und G verwendet eine doppelte Linkedlist(Adjazenzlist
-adj) als Datenstruktur für die Kanten und speichert die Batterien in einer Arraylist mit gleicher
-Nummerierung/Indexierung, in welcher für jeden Knoten die entsprechenden Kanten gespeichert
+
+> {v|vindex.energie=0}→vindex.isDone=true. 
+
+S wird in einem zweidimensionalen Array gespeichert(siehe Generieren der Kanten ) und G verwendet eine doppelte Linkedlist(Adjazenzlist adj) als Datenstruktur für die Kanten und speichert die Batterien in einer Arraylist mit gleicher Nummerierung/Indexierung, in welcher für jeden Knoten die entsprechenden Kanten gespeichert
 sind.
 
-2. Dynamischer vs Statischer Graph
+#### 1.2. Dynamischer vs Statischer Graph
 
 Bevor man sich an das Generieren der Kanten wagt, muss die optimale Datenstruktur für diese
 gewählt werden. Es kommen zwei Modelle infrage, das des statischen- und das des dynamischen
@@ -86,22 +80,29 @@ nimmt für den Graphen nur das nötigste(Reichweite=Energie) und löscht bspw. a
 erfolgreichen Abarbeiten des Knotens(v'→v mit eingeschlossen). Ist die Energie einer Batterie nach
 einem Wechsel jedoch höher als die alte Energie(v.energieneu>v.energyalt), so werden dem Knoten v
 alle möglichen Kanten aus einer externen Liste(siehe Generieren von Kanten ) zugewiesen. Der
-folgende Operator Expandieren bezieht sich auf das heuristische Erweitern eines Pfades, durch
+folgende Operator Expandieren bezieht sich auf das heuristische Erweitern eines Pfades, durch wählen einer Kante e(v,v') oder e(v, v), also somit auf ein kostengebundenes Handeln jeglicher Form.
 
+| Dynamischer Graph |  Statischer Graph |
+:-------------------------:|:-------------------------:
+![](https://i.ibb.co/88YH2k8/unb2.png)  |  ![](https://i.ibb.co/QmsV0r8/unb3.png)
+Vorteile: | Vorteile:
+-Expandiert nicht zu fertigen Nodes, da es zu diesen logischerweise keine Kanten gibt. Somit werden Abfragen reduziert | keine delete → O(m[n])→ Alle Kanten, des Knoten v, da eine Linked List als Datenstruktur gewählt wurde.|
+-Gruppierung möglich | insert Operationen → O(1)
+-weniger Kanten und somit auch schnellere Laufzeit, da `|E|<sub>dynamisch</sub>  <= |E|<sub>statisch</sub>` | -pro Expansion muss lediglich V gespeichert werden, da E immer gleich bleibt. 
+-insert Operation → O(1)  |  
+`Nachteile:` | `Nachteile:`
+-delete → O(m[n]) → w.c. | -Graph benötigt mehr Speicher, da
+`|E|<sub>statisch</sub> >= |E|<sub>dynamisch</sub>`
 
-Wählen einer Kante e(v,v') oder e(v, v), also somit auf ein kostengebundenes Handeln jeglicher
-Form.
-
-Dynamischer Graph Statischer Graph
-
-Vorteile:
--Expandiert nicht zu fertigen Nodes, da es zu
-diesen logischerweise keine Kanten gibt. Somit
-werden Abfragen reduziert
--Gruppierung möglich
--weniger Kanten und somit auch schnellere
-Laufzeit, da |E|dynamisch <= |E|statisch
 -insert Operation → O(1)
+-insert Operation → O(1)  |  ![](https://cldup.com/dTxpPi9lDf.thumb.png)
+![](https://cldup.com/dTxpPi9lDf.thumb.png)  |  ![](https://cldup.com/dTxpPi9lDf.thumb.png)
+
+
+
+ 
+
+
 
 Vorteile:
 -keine delete → O(m[n])→ Alle Kanten, des
