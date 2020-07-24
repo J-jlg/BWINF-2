@@ -28,7 +28,7 @@ G := (V, E),
 
 mit V := Menge von Batterien und E := Menge von Kanten, reduziert. Kante 
 ```sh
- e∈E mit e(v, v') bzw. e(v, v) 
+ e∈E mit e(v, v') bzw. e(v, v)  <sub>1</sub>
 ```
 ist dabei eine zusammengefasste Mehrfachkante, worauf in Generieren der Kanten weiter eingegangen
 wird. Durch Benutzung eines Graphen kann man den Roboter zielstrebig von Batterie zu Batterie
