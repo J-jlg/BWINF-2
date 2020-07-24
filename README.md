@@ -35,8 +35,11 @@ schicken, was massiv Wege also Rechenleistung erspart.
 [![Build Status](https://i.ibb.co/yg52Vvw/Unbenannt1.png)](https://travis-ci.org/joemccann/dillinger)
 
 Für jede Ersatzbatterie 
-> v <sub>1</sub> ∈ V ... vn ∈ V, 
-sowie für den Agenten v0 ∈ V gilt: v V:v S bzw. V S. ∀∈∈⊆
+> v<sub>1</sub> ∈ V ... v<sub>n</sub> ∈ V,   
+
+sowie für den Agenten
+> v<sub>0</sub> ∈ V gilt: v∈V:v ∈S bzw. V ⊆S. 
+
 Diese Prozedur führt in Bsp: 1,4,5,6 zu einer massiven Verkleinerung des Spielfeldes bzw. der
 Knoten V(siehe Abbildung 1 für Bsp: 1).
 G 0 (Graph(rechts)) = (VanzBatt, E 0 ), mit E 0 := ∅ und |V| := Anzahl an Ersatzbatterien + dem der
