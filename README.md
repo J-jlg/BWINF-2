@@ -1,82 +1,42 @@
-#38. Bundeswettbewerb Informatik
-#2. Runde
+# 38. Bundeswettbewerb Informatik
+## 2. Runde
 
-Teilnehmer: Jan-Luca Gruber
-Betreuer: Frank Schell, Friedrich-Hecker-Schule Sinsheim
-Programmiersprache: Java
-Entwicklungsumgebung: Eclipse
-JRE version: Java SE – 1.
-Teilnahme-ID: 54800
+> Teilnehmer: Jan-Luca Gruber
+> Betreuer: Frank Schell, Friedrich-Hecker-Schule Sinsheim
+> Programmiersprache: Java
+> Entwicklungsumgebung: Eclipse
 
-Inhaltsverzeichnis
+### 1.a) Lösungsidee/Abstrakt:
 
-1.a) Lösungsidee/Abstrakt:.................................................................................................................. 2
-1.Modellierung der Knoten:.................................................................................................. 3
-
-2.Dynamischer vs Statischer Graph...................................................................................... 3
-3.Generieren der Kanten........................................................................................................ 4
-4.Zielzustand......................................................................................................................... 6
-5.SZK und Geo-Gruppen...................................................................................................... 6
-6.Priority Queue.................................................................................................................... 8
-7.Preprocess vs Runtime....................................................................................................... 8
-8.OpenList/Zustandsspeicherung.......................................................................................... 9
-9.Speicheranalyse der OpenList............................................................................................ 9
-10.Besonderheiten in der Geo-Gruppierung......................................................................... 9
-11.Optimierung der Gruppierung........................................................................................ 10
-12.Ungültige Map ausschließen/EndNodeDetection.......................................................... 10
-13.Grenzverhalten der Heuristik/Limitierung der Heuristik............................................... 10
-14.GUI................................................................................................................................. 11
-15.Darstellung der Lösung.................................................................................................. 11
-16.Beispiele......................................................................................................................... 11
-17.Wichtigste Teile des Quellcodes..................................................................................... 23
-2.b) Lösungsidee/Abstrakt:................................................................................................................ 25
-1.Abstrakt............................................................................................................................ 25
-2.Definition.......................................................................................................................... 25
-3.Paramter............................................................................................................................ 25
-4.Generieren des Feldes...................................................................................................... 27
-5.Darstellung der Lösung.................................................................................................... 28
-6.GUI................................................................................................................................... 28
-7.Beispiele........................................................................................................................... 28
-8.Leicht................................................................................................................................ 28
-9.Mittel................................................................................................................................ 29
-10.Schwer............................................................................................................................ 29
-11.Sehr Schwer.................................................................................................................... 30
-12.Wichtigste Teile des Quellcodes..................................................................................... 31
-
-1.a) Lösungsidee/Abstrakt:
-
-Ziel des Aufgabenteils ist es, einen Weg bzw. Pfad so zu finden, dass alle Batterien, wenn möglich
-entladen werden. Die Aufgabenstellung lässt die Art und Weise, also zudem auch die Qualität des
-Weges offen, was auf die Benutzung eines heuristischen Suchverfahrens als Optimum schließen
-lässt. Da es sich dabei um eine offline-Suche^1 handelt, können unter Anbetracht der Laufzeit,
-beliebig viele Vorverarbeitungen stattfinden, um ungültige Wege, die schlussendlich nicht in den
-Zielzustand führen, auszuschließen. Dies gelingt durch das grundlegende Vermischen einer
-Sackgassenerkennungs- und Gruppierungsheuristik.^2 Doch zuerst einmal gilt es das Problem so zu
+Ziel des Aufgabenteils ist es, einen Weg bzw. Pfad so zu finden, dass alle Batterien, wenn möglich entladen werden. Die Aufgabenstellung lässt die Art und Weise, also zudem auch die Qualität des Weges offen, was auf die Benutzung eines heuristischen Suchverfahrens als Optimum schließen lässt. Da es sich dabei um eine [offline-Suche](https://xlinux.nist.gov/dads/HTML/offline.html) handelt, können unter Anbetracht der Laufzeit,beliebig viele Vorverarbeitungen stattfinden, um ungültige Wege, die schlussendlich nicht in den Zielzustand führen, auszuschließen. Dies gelingt durch das grundlegende Vermischen einer [Sackgassenerkennungs- und Gruppierungsheuristik](https://www.uni-kassel.de/eecs/fileadmin/datas/fb16/Fachgebiete/PLM/Dokumente/Master_Bachelor_Diplom/masterarbeit.pdf). Doch zuerst einmal gilt es das Problem so zu
 Modellieren, dass man es mit klassischen Algorithmen bearbeiten kann. Dafür benötigt man in
 diesem Fall einen Graphen.
 
-1 Vgl. https://xlinux.nist.gov/dads/HTML/offline.html 
-2 Aus dem Englischen: Gateway Heuristik und Dead-End Heuristik:
-Vgl.Yngvi Björnson, Kári Halldórson, “Improved Heuristics for Optimal Pathfinding on Game Maps”, 2006,
-Reykjavik University, Iceland und
-https://www.uni-kassel.de/eecs/fileadmin/datas/fb16/Fachgebiete/PLM/Dokumente/Master_Bachelor_Diplom/masterarbeit.pdf
-
-1. Modellierung der Knoten:
+#### 1.1. Modellierung der Knoten:
 
 Der erste wichtige Schritt, ist die Repräsentation des Problems und somit die Wahl der
 Datenstruktur. Gegeben ist ein k*k großes Spielfeld: S, wobei k für die Länge/Breite des
 quadratischen Spielfeldes steht. Der Roboter a (für Agent), wird durch die Notation: x,y,Ladung in
-dieses Feld instanziiert. Er ist auf die sogenannte Manhattandistanz^3 reduziert, er kann sich also
+dieses Feld instanziiert. Er ist auf die sogenannte [Manhattandistanz](https://deacademic.com/dic.nsf/dewiki/) reduziert, er kann sich also
 lediglich nach oben, unten, rechts und links jeweils einen Schritt bewegen. Pro absolvierten Schritt,
 wird seine Ladung um eins reduziert. Folgend werden durch die weiteren Zeilen die Ersatzbatterien
 definiert und auf das Feld übertragen. Um nun den Roboter nicht wild durch die Gegend rennen zu
-lassen, wird die 2d Map auf einen gerichtet- und gewichteten Multigraphen G := (V, E), mit V :=
-Menge von Batterien und E := Menge von Kanten, reduziert. Kante e E mit e(v, v') bzw. e(v, v) ist∈
-dabei eine zusammengefasste Mehrfachkante, worauf in Generieren der Kanten weiter eingegangen
+lassen, wird die 2d Map auf einen gerichtet- und gewichteten Multigraphen 
+> G := (V, E), 
+
+mit V := Menge von Batterien und E := Menge von Kanten, reduziert. Kante 
+> e∈E mit e(v, v') bzw. e(v, v) 
+
+ist dabei eine zusammengefasste Mehrfachkante, worauf in Generieren der Kanten weiter eingegangen
 wird. Durch Benutzung eines Graphen kann man den Roboter zielstrebig von Batterie zu Batterie
 schicken, was massiv Wege also Rechenleistung erspart.
 
-Für jede Ersatzbatterie v 1 ∈ V ... vn ∈ V, sowie für den Agenten v 0 ∈ V gilt: v V:v S bzw. V S. ∀∈∈⊆
+
+[![Build Status](https://i.ibb.co/yg52Vvw/Unbenannt1.png)](https://travis-ci.org/joemccann/dillinger)
+
+Für jede Ersatzbatterie 
+> v <sub>1</sub> ∈ V ... vn ∈ V, 
+sowie für den Agenten v0 ∈ V gilt: v V:v S bzw. V S. ∀∈∈⊆
 Diese Prozedur führt in Bsp: 1,4,5,6 zu einer massiven Verkleinerung des Spielfeldes bzw. der
 Knoten V(siehe Abbildung 1 für Bsp: 1).
 G 0 (Graph(rechts)) = (VanzBatt, E 0 ), mit E 0 := ∅ und |V| := Anzahl an Ersatzbatterien + dem der
@@ -106,7 +66,6 @@ einem Wechsel jedoch höher als die alte Energie(v.energieneu>v.energyalt), so w
 alle möglichen Kanten aus einer externen Liste(siehe Generieren von Kanten ) zugewiesen. Der
 folgende Operator Expandieren bezieht sich auf das heuristische Erweitern eines Pfades, durch
 
-3 https://deacademic.com/dic.nsf/dewiki/
 
 Wählen einer Kante e(v,v') oder e(v, v), also somit auf ein kostengebundenes Handeln jeglicher
 Form.
