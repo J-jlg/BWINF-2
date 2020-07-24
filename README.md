@@ -22,11 +22,14 @@ lediglich nach oben, unten, rechts und links jeweils einen Schritt bewegen. Pro 
 wird seine Ladung um eins reduziert. Folgend werden durch die weiteren Zeilen die Ersatzbatterien
 definiert und auf das Feld übertragen. Um nun den Roboter nicht wild durch die Gegend rennen zu
 lassen, wird die 2d Map auf einen gerichtet- und gewichteten Multigraphen 
-> G := (V, E), 
+```sh
+G := (V, E), 
+```
 
 mit V := Menge von Batterien und E := Menge von Kanten, reduziert. Kante 
-> e∈E mit e(v, v') bzw. e(v, v) 
-
+```sh
+ e∈E mit e(v, v') bzw. e(v, v) 
+```
 ist dabei eine zusammengefasste Mehrfachkante, worauf in Generieren der Kanten weiter eingegangen
 wird. Durch Benutzung eines Graphen kann man den Roboter zielstrebig von Batterie zu Batterie
 schicken, was massiv Wege also Rechenleistung erspart.
@@ -35,16 +38,30 @@ schicken, was massiv Wege also Rechenleistung erspart.
 [![Build Status](https://i.ibb.co/yg52Vvw/Unbenannt1.png)](https://travis-ci.org/joemccann/dillinger)
 
 Für jede Ersatzbatterie 
-> v<sub>1</sub> ∈ V ... v<sub>n</sub> ∈ V,   
+```sh
+ v<sub>1</sub> ∈ V ... v<sub>n</sub> ∈ V,   
+```
 
 sowie für den Agenten
-> v<sub>0</sub> ∈ V gilt: v∈V:v ∈S bzw. V ⊆S. 
+```sh
+ v<sub>0</sub> ∈ V gilt: v∈V:v ∈S bzw. V ⊆S. 
+```
 
 Diese Prozedur führt in Bsp: 1,4,5,6 zu einer massiven Verkleinerung des Spielfeldes bzw. der
 Knoten V(siehe Abbildung 1 für Bsp: 1).
-G 0 (Graph(rechts)) = (VanzBatt, E 0 ), mit E 0 := ∅ und |V| := Anzahl an Ersatzbatterien + dem der
-Agentenbatterie_._ Die Laufzeit für das Durchsuchen der Knoten, welches später oft durchgeführt und
-somit eine große Rolle spielt, reduziert sich also von O(kk) auf O(n). Wobei für die Anzahl Knoten
+```sh
+ G <sub>0</sub> (Graph<sub>r</sub>) = (V<sub>anzBatt</sub>, E<sub>0</sub>)
+```
+mit
+```sh
+E<sub>0</sub> := ∅ und |V| := Anzahl an Ersatzbatterien + dem der Agentenbatterie.
+```
+
+Die Laufzeit für das Durchsuchen der Knoten, welches später oft durchgeführt und
+somit eine große Rolle spielt, reduziert sich also von 
+> O(k*k) -> O(n).
+
+Wobei für die Anzahl Knoten
 n gilt: n <= kk. Der Fall n = kk(zudem auch n ≈ k) wird später im Abschnitt: SZK und Geo-
 Gruppen behandelt. Um nun die einzelnen Batterien entsprechend zu identifizieren, bekommt jede
 Batterie, inklusive der des Agenten(grün) eine Nummer/Index zugewiesen. Der Agent bekommt die
