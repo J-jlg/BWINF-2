@@ -152,7 +152,7 @@ logischerweiße keine Kante(n) hat.
 
 Folgende Beispiele beweisen/zeigen auf, warum diese zwei Überprüfungen von Nöten sind:  
 ![](https://i.ibb.co/d7Pjg3Y/1.png)  
-![](https://i.ibb.co/7YnVFwN/2.png)
+![](https://i.ibb.co/7YnVFwN/2.png)  
 Wie schon angedeutet, wird jede Kante mittels einer Breitensuche ermittelt. Dies stellt sich als
 effizient heraus, [da weder Ziel bekannt ist und zudem noch jeder Knoten in einem Durchlauf
 gefunden werden kann.](https://zerowidth.com/2013/a-visual-explanation-of-jump-point-search.html "Trotz dass Algorithmen, wie: JPS(+) schneller wären, benötigt die Breitensuche, genau wegen nur einem Durchlauf weniger Laufzeit.") Durch diese kann nun für jeden Knoten die geringsten Kosten der Kanten
