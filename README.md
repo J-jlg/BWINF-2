@@ -38,7 +38,7 @@ schicken, was massiv Wege also Rechenleistung erspart.
 [![Build Status](https://i.ibb.co/yg52Vvw/Unbenannt1.png)](https://travis-ci.org/joemccann/dillinger)
 
 Für jede Ersatzbatterie 
-```sh
+```
  v1 ∈ V ... v<sub>n</sub> ∈ V,   
 ```
 
