@@ -381,7 +381,7 @@ teilweise auch komplexer aufgebaut sind, wurde das Clusterverfahren zur Bestimmu
 um die Allgemeinheit optimiert. Folgende Beispiele wäre suboptimal für den bisweilen
 Clusteralgorithmus:
 
-![](https://i.ibb.co/gD2cPvY/1.png)  
+![](https://i.ibb.co/gD2cPvY/1.png)
 ![](https://i.ibb.co/ZHC9fXP/2.png)
 ![](https://i.ibb.co/vYp2Vbz/3.png)
 
