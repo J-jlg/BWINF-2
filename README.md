@@ -39,7 +39,7 @@ schicken, was massiv Wege also Rechenleistung erspart.
 
 Für jede Ersatzbatterie 
 ```
- v1 ∈ V ... v<sub>n</sub> ∈ V,   
+ v1 ∈ V ... v <sub>n</sub> ∈ V,   
 ```
 
 > <sub>0</sub>
