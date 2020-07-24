@@ -39,23 +39,26 @@ schicken, was massiv Wege also Rechenleistung erspart.
 
 Für jede Ersatzbatterie 
 ```sh
- v <sub> 1 </sub> ∈ V ... v<sub>n</sub> ∈ V,   
+ v<sub>1</sub> ∈ V ... v<sub>n</sub> ∈ V,   
 ```
 
 sowie für den Agenten
 ```sh
- v <sub> 0 </sub> ∈ V gilt: v∈V:v ∈S bzw. V ⊆S. 
+ v<sub>0</sub> ∈ V gilt: v∈V:v ∈S bzw. V ⊆S. 
 ```
 
 Diese Prozedur führt in Bsp: 1,4,5,6 zu einer massiven Verkleinerung des Spielfeldes bzw. der
 Knoten V(siehe Abbildung 1 für Bsp: 1).
 ```sh
- G <sub> 0 </sub> (Graph <sub> r </sub>) = (V <sub> anzBatt </sub>, E <sub> 0 </sub>)
+ G<sub>0</sub> (Graph <sub>r</sub>) = (V<sub>anzBatt</sub>, E<sub>0</sub>)
 ```
 mit
 ```sh
-E <sub> 0 </sub> := ∅ und |V| := Anzahl an Ersatzbatterien + dem der Agentenbatterie.
+E<sub>0</sub> := ∅ und |V| := Anzahl an Ersatzbatterien + dem der Agentenbatterie.
 ```
+
+This is some <sup>superscript</sup> text.
+This is some <sub>superscript</sub> text.
 
 Die Laufzeit für das Durchsuchen der Knoten, welches später oft durchgeführt und
 somit eine große Rolle spielt, reduziert sich also von 
