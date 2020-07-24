@@ -90,7 +90,7 @@ folgende Operator Expandieren bezieht sich auf das heuristische Erweitern eines 
 -Expandiert nicht zu fertigen Nodes, da es zu diesen logischerweise keine Kanten gibt. Somit werden Abfragen reduziert | keine delete → O(m[n])→ Alle Kanten, des Knoten v, da eine Linked List als Datenstruktur gewählt wurde.|
 -Gruppierung möglich | insert Operationen → O(1)
 -weniger Kanten und somit auch schnellere Laufzeit, da \|E\|<sub>dynamisch</sub>  <= \|E\|<sub>statisch</sub> | -pro Expansion muss lediglich V gespeichert werden, da E immer gleich bleibt. 
--insert Operation → O(1)  |  -
+-insert Operation → O(1)  |  \
 `Nachteile:` | `Nachteile:`
 -delete → O(m[n]) → w.c. | -Graph benötigt mehr Speicher, da\| E\|<sub>statisch</sub> >= \|E\|<sub>dynamisch</sub>
 -pro Expansion muss V+E gespeichert werden, da die Parameter des Graphen Gzustand, für jeden Pfad einzigartig sind. | -Benötigt mehr Laufzeit, da schließlich Kanten, selbst wenn der Knoten „fertig" ist, bleiben. → min O(1) pro Expansion.
