@@ -95,8 +95,8 @@ folgende Operator Expandieren bezieht sich auf das heuristische Erweitern eines 
 -delete → O(m[n]) → w.c. | -Graph benötigt mehr Speicher, da\| E\|<sub>statisch</sub> >= \|E\|<sub>dynamisch</sub>
 -pro Expansion muss V+E gespeichert werden, da die Parameter des Graphen Gzustand, für jeden Pfad einzigartig sind. | -Benötigt mehr Laufzeit, da schließlich Kanten, selbst wenn der Knoten „fertig" ist, bleiben. → min O(1) pro Expansion.
 \ | hat keine ersichtliche Methode zum Gruppieren
- | Graph kann zumindest im average case nicht sinnvoll unterteilt bzw. vereinfacht werden.
-d | Es muss viel vorverarbeitet werden, da in dem Node 3(siehe bsp. oben) auch die Energie 6 reingehen würde, wegen 0→3. Es muss also für jeden Node die maximale Energie gefunden werden.
+\ | Graph kann zumindest im average case nicht sinnvoll unterteilt bzw. vereinfacht werden.
+\ | Es muss viel vorverarbeitet werden, da in dem Node 3(siehe bsp. oben) auch die Energie 6 reingehen würde, wegen 0→3. Es muss also für jeden Node die maximale Energie gefunden werden.
 
 Ich habe mich in diesem Fall für den [vollen dynamischen Graphen](https://www.geeksforgeeks.org/dynamic-connectivity-set-1-incremental/) entschieden(insert + deletion),
 da vor allem die folgenden Gruppierungen(siehe SZK und Geo-Gruppen ), massiv Expandierungen
