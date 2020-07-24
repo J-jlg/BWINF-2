@@ -8,7 +8,9 @@
 
 ### 1.a) Lösungsidee/Abstrakt:
 
-Ziel des Aufgabenteils ist es, einen Weg bzw. Pfad so zu finden, dass alle Batterien, wenn möglich entladen werden. Die Aufgabenstellung lässt die Art und Weise, also zudem auch die Qualität des Weges offen, was auf die Benutzung eines heuristischen Suchverfahrens als Optimum schließen lässt. Da es sich dabei um eine [offline-Suche](https://xlinux.nist.gov/dads/HTML/offline.html) handelt, können unter Anbetracht der Laufzeit,beliebig viele Vorverarbeitungen stattfinden, um ungültige Wege, die schlussendlich nicht in den Zielzustand führen, auszuschließen. Dies gelingt durch das grundlegende Vermischen einer [Sackgassenerkennungs- und Gruppierungsheuristik](https://www.uni-kassel.de/eecs/fileadmin/datas/fb16/Fachgebiete/PLM/Dokumente/Master_Bachelor_Diplom/masterarbeit.pdf). Doch zuerst einmal gilt es das Problem so zu
+Ziel des Aufgabenteils ist es, einen Weg bzw. Pfad so zu finden, dass alle Batterien, wenn möglich entladen werden. Die Aufgabenstellung lässt die Art und Weise, also zudem auch die Qualität des Weges offen, was auf die Benutzung eines heuristischen Suchverfahrens als Optimum schließen lässt. Da es sich dabei um eine [offline-Suche](https://xlinux.nist.gov/dads/HTML/offline.html) handelt, können unter Anbetracht der Laufzeit,beliebig viele Vorverarbeitungen stattfinden, um ungültige Wege, die schlussendlich nicht in den Zielzustand führen, auszuschließen. Dies gelingt durch das grundlegende Vermischen einer [Sackgassenerkennungs- und Gruppierungsheuristik](https://www.uni-kassel.de/eecs/fileadmin/datas/fb16/Fachgebiete/PLM/Dokumente/Master_Bachelor_Diplom/masterarbeit.pdf "Aus dem Englischen: Gateway Heuristik und Dead-End Heuristik:
+Vgl.Yngvi Björnson, Kári Halldórson, “Improved Heuristics for Optimal Pathfinding on Game Maps”, 2006,
+Reykjavik University, Iceland"). Doch zuerst einmal gilt es das Problem so zu
 Modellieren, dass man es mit klassischen Algorithmen bearbeiten kann. Dafür benötigt man in
 diesem Fall einen Graphen.
 
@@ -104,7 +106,7 @@ reduzieren. Es gilt die Heuristik so schlau bzw. informiert wie möglich Expandi
 nur die best möglichen Wege zu gehen. Denn eine uninformierte Suche wäre reines Bruteforce.
 (siehe SZK und Geo-Gruppen Bruteforcevergleich)
 
-#### 3. Generieren der Kanten
+#### 1.3. Generieren der Kanten
 
 Da nun die Datenstruktur für die Knoten sorgfältig gewählt wurde, gilt es die Kanten e E von G∈ init
 zu generieren, wobei Ginit den dynamischen Ausgangsgraph darstellen soll.(siehe oben links
@@ -114,16 +116,8 @@ Kosten geben kann(Multigraph), wie in dem Beispiel oben, von dem Agent mit der I
 0→3(x:5,y:4) kann die Kante k quasi jede Kosten von dem kürzesten Pfad(3 Schritte) bis
 Agentenbatterie von dem minimum ausgehend immer plus zwei haben.
 
-> \sum_{i=1}^n min(v->v')+(i*2)
+> Σ<sub>n</sub><sup>i=1</sup> min(v->v')+(i*2)
 
-\begin{equation*}
-\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
-\end{equation*}
-
-```math
-SE = \frac{\sigma}{\sqrt{n}}
-```
-Σ<sub>n</sub><sup>i=1</sup> min(v->v')+(i*2)
 Um jetzt nicht jede einzelne Kante in dem dynamischen Graphen, der schließlich für eine
 Reduzierung der Kanten gedacht ist in dem Graph abzubilden, wird nur der kürzeste Pfad von
 v → v' bzw. v → v abgebildet. In diesem sind alle anderen Kanten nach v' mit inbegriffen, was die
@@ -135,7 +129,9 @@ von e). Bei der Entfernung 2 gilt dasselbe. Ab der Entfernung: 3, kann der Agent
 Pfades unendlich oft vor und zurückbewegen und für jede k.energie >= 3 gilt: k.isExpandable=true.
 Kante k → IsExpandable:
 
-true false true false true
+| true |  false | true | false | true
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+![](https://i.ibb.co/XZ1vQVS/1.png)  |  ![](https://i.ibb.co/6J5H4Cv/2.png) | ![](https://i.ibb.co/r5gbL8n/3.png) | ![](https://i.ibb.co/b6VMRDw/4.png) | ![](https://i.ibb.co/xHfQHnR/5.png)
 
 Oben ein paar Beispiele. Zudem muss berücksichtigt werden, dass der Agent(grün) kein eigentlicher
 Node ist, da seine Batterie mit ihm mitgeht. Daraus folgt, dass sein Feld als Freies angesehen wird.
@@ -148,41 +144,38 @@ Kosten von e: 2 Schritte und sobald 2 freie Felder Kombinationen von dem Node au
 v mit 2*x(x: 0...∞) Kosten nach v. Natürlich gilt auch hier, dass Nodestart 0(grün) zu sich selbst
 logischerweiße keine Kante(n) hat.
 
-Kante k(2) → IsExpandable: true false false false
+> Kante k(2) → IsExpandable: 
+
+| true |  false | false | false 
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+![](https://i.ibb.co/94bBTNq/1.png)  |  ![](https://i.ibb.co/PT3rN0h/2.png) | ![](https://i.ibb.co/52D524R/3.png) | ![](https://i.ibb.co/j3tvzt7/4.png)
 
 Folgende Beispiele beweisen/zeigen auf, warum diese zwei Überprüfungen von Nöten sind:
-
+![](https://i.ibb.co/d7Pjg3Y/1.png)  
+![](https://i.ibb.co/7YnVFwN/2.png)
 Wie schon angedeutet, wird jede Kante mittels einer Breitensuche ermittelt. Dies stellt sich als
-effizient heraus, da weder Ziel bekannt ist und zudem noch jeder Knoten in einem Durchlauf
-gefunden werden kann.^5 Durch diese kann nun für jeden Knoten die geringsten Kosten der Kanten
+effizient heraus, [da weder Ziel bekannt ist und zudem noch jeder Knoten in einem Durchlauf
+gefunden werden kann.](https://zerowidth.com/2013/a-visual-explanation-of-jump-point-search.html "Trotz dass Algorithmen, wie: JPS(+) schneller wären, benötigt die Breitensuche, genau wegen nur einem Durchlauf weniger Laufzeit.") Durch diese kann nun für jeden Knoten die geringsten Kosten der Kanten
 von v → v' abgelesen werden, sowie für v → v wenn die obigen Kriterien erfüllt sind. Für den Node
-3 im Bsp:1(1. Seite)
-
-5 Trotz dass Algorithmen, wie: https://zerowidth.com/2013/a-visual-explanation-of-jump-point-search.html(JPS(+))
-schneller wären, benötigt die Breitensuche, genau wegen nur einem Durchlauf weniger Laufzeit.
-
-würde der 2d Array(welcher aus diesem Grund in Modellierung des Graphen angelegt wurde) nun
+3 im Bsp:1, würde der 2d Array(welcher aus diesem Grund in Modellierung des Graphen angelegt wurde) nun
 wie folgt aussehen:
 
+![](https://i.ibb.co/pd4ZHgx/1.png)
+
 Natürlich wird die Breitensuche nur entsprechend bis zur Energie des Nodes gemacht. Die generelle
-Laufzeit für das Generieren aller Kanten in der AdjazenzList beträgt: O(nd) im worst case.
-(Distanz d := 4e(n)) Wobei e(n) für die Energie des Knotens n steht. Für die Ausnahmen(zu sich
+Laufzeit für das Generieren aller Kanten in der AdjazenzList beträgt: 
+> O(nd) - w.c.
+>(Distanz d := 4*e(n)) 
+
+Wobei e(n) für die Energie des Knotens n steht. Für die Ausnahmen(zu sich
 selbst/Agent bzw. Batt: 0 beachten): wird entsprechend max O(3) → O(1) Zeit pro BFS benötigt,
 was nicht erwähnenswert ist. Die Laufzeit der BFS ist zwar relativ hoch, doch ist sie für eine
-korrekte Lösung nötig. Wobei 4e(n)^ maximal kk Nodes besuchen kann. → d <= kk-2(wobei -
-für den Knoten selbst, sowie den des Agenten steht).
-Um nun für den Fall vorbereitet zu sein, dass die neue Batterie, nach einem Wechsel größer ist, als
-die Alte, wird eine Extraliste angelegt. Diese AdjazenzListe: externList, speichert für jeden Knoten
-mit Hilfe einer Breitensuche wie oben, die Kanten, die bei dem maximal Möglichen, was in die
-Batterie reinkommen kann, entstehen können. Das Maximum, wird mit Hilfe der SZK^6 ermittelt,
-worauf später noch weiter eingegangen wird. Was aber der markante Unterschied zu dem statischen
-Graphen ist, dass die externList sekundär und nicht primär gedacht ist, was der Dead-End
-Detection^7 etc. nicht im Weg steht. Man verwendet hier also nochmals eine weitere O(nd) Suche,
-was sich allerdings dadurch ausgleicht, dass später für jede neue (höhere) Batterienanzahl in v, eine
-weitere Breitensuche getätigt werden müsste. Und der Unterschied zwischen O(m[n]) und
+korrekte Lösung nötig. Wobei 4*e(n) maximal k*k Nodes besuchen kann. → d <= k*k-2(wobei -
+für den Knoten selbst, sowie den des Agenten steht). Um nun für den Fall vorbereitet zu sein, dass die neue Batterie, nach einem Wechsel größer ist, als die Alte, wird eine Extraliste angelegt. Diese AdjazenzListe: externList, speichert für jeden Knoten mit Hilfe einer Breitensuche wie oben, die Kanten, die bei dem maximal Möglichen, was in die
+Batterie reinkommen kann, entstehen können. Das Maximum, wird mit Hilfe der [SZK](https://www.geeksforgeeks.org/strongly-connected-components/ "Die deutsche Abkürzung der Starken Zusammenhangskomponente. (Strongly connected component)") ermittelt, worauf später noch weiter eingegangen wird. Was aber der markante Unterschied zu dem statischen Graphen ist, dass die externList sekundär und nicht primär gedacht ist, was der [Dead-End Detection](https://www.uni-kassel.de/eecs/fileadmin/datas/fb16/Fachgebiete/PLM/Dokumente/Master_Bachelor_Diplom/masterarbeit.pdf "Vgl. Sackgassenerkennung") etc. nicht im Weg steht. Man verwendet hier also nochmals eine weitere O(nd) Suche, was sich allerdings dadurch ausgleicht, dass später für jede neue (höhere) Batterienanzahl in v, eine weitere Breitensuche getätigt werden müsste. Und der Unterschied zwischen O(m[n]) und
 O(4*e(n)) ist wohl deutlich klar.
 
-4. Zielzustand
+#### 1.4. Zielzustand
 
 Da nun Kanten und Knoten generiert wurden, gilt es, bevor man einen Pfad zum Ziel sucht, dieses
 erstmals zu definieren. Es wird ein Zielzustand in Form eines Graphen gesucht, inwelchem die
@@ -190,7 +183,7 @@ Agentenbatterie gleich der Anzahl an gesammten Batterie Energien des Spielfeldes
 Kante von vAgenten → v' bzw. vAgenten → v mit den Kosten >= a.getEnergie() gibt. Zudem muss für alle
 anderen Knoten v gelten: ∀∈v V:v.isDone=true.
 
-5. SZK und Geo-Gruppen
+#### 1.5. SZK und Geo-Gruppen
 
 Nachdem Ginit erfolgreich generiert wurde, müssen einige grundlegende Dinge für das heuristische
 Verfahren vorbereitet werden. Für das schnelle Finden eines gültigen Weges, gilt es die Heuristik so
@@ -201,15 +194,13 @@ selbst nach mehreren Millionen Expandierungen kein nennenswerter Fortschritt zei
 werden nun die einzelnen Knoten mittels zweier Verfahren in kleinere Gruppen unterteilen.
 (I)Der erste Algorithmus findet die stark zusammenhängende Komponenten SZK. Und kann somit
 Aussagen darüber treffen, welche Knoten nahe aneinander sind, bzw. ob sie von einander erreichbar
-sind. Ich habe hier den Algorithmus von Tarjan implementiert, weil er mit seiner Laufzeit von
-O(V+E) in diesen Fall eine optimale Laufzeit hat.^8
+sind. Ich habe hier den Algorithmus von Tarjan implementiert, [weil er mit seiner Laufzeit von
+O(V+E) in diesen Fall eine optimale Laufzeit hat.](https://de.wikipedia.org/wiki/Algorithmus_von_Tarjan_zur_Bestimmung_starker_Zusammenhangskomponenten "Kosaraju's algorithmus O(V^2) würde im a.c. mehr Laufzeit beanspruchen. Vorallem in Fällen, wie k=n*n würde die
+Lauzeit drastisch fallen.")
 
-6 Die deutsche Abkürzung der Starken Zusammenhangskomponente. (Strongly connected component)
-7 Vgl. Sackgassenerkennungs Seite 3
-8 Kosaraju's algorithmus O(V^2 ) würde im a.c. mehr Laufzeit beanspruchen. Vorallem in Fällen, wie k=n*n würde die
-Lauzeit drastisch fallen.
-
-Beispiel: 5 SCC von Beispiel 5
+| Beispiel 5 |  SCC von Beispiel 5 | 
+:-------------------------:|:-------------------------:|
+![](https://i.ibb.co/tb0R0vz/1.png)  |  ![](https://i.ibb.co/Ybqm1Yf/2.png) |
 
 Warum dieser Algorithmus für die Heuristik so mächtig ist, zeigt sich gleich noch. Vorher wird von
 jeder SCC Gruppe das Maximum ausgerechnet mit der Methode Helper.calcMax → O(n). → Grün
@@ -219,10 +210,10 @@ vorverarbeitet(Runtime wird später noch gezeigt). Hier wird nun auch das Maximu
 externList bestimmt, indem geschaut wird, was ist das Maximum an Energie, was eine SCC Gruppe
 erreichen kann. Dieser individuelle maximale Wert für jede SCC Gruppe wird anschließend als
 maximale Energie für jeden Knoten in dieser SCC Gruppe genommen. Dadurch enthält externList
-garantiert den maximalen Energie Wert für v V(Agent: 0 ausgeschlossen). Das nun Geniale dieser∀∈
+garantiert den maximalen Energie Wert für ∀v∈V(Agent: 0 ausgeschlossen). Das nun Geniale dieser 
 Ansammlung an Informationen über den Graphen lässt die Heuristik so expandieren, dass jede
-SCC-Gruppe von v SCC∈ i erreichbar ist. Würde der Agent sich nun von 0→(SCC-Gruppe von 0:
-isDone=true, da alle v SCC∈ 0 isDone=true) bewegen, so kann die Heuristik nur so expandieren, dass
+SCC-Gruppe von v∈SCC<sub>i</sub> erreichbar ist. Würde der Agent sich nun von 0→(SCC-Gruppe von 0:
+isDone=true, da alle v∈SCC<sub>0</sub> isDone=true) bewegen, so kann die Heuristik nur so expandieren, dass
 das Maximum in der linken SCC Gruppe mindestens 10 bleibt.(Helper.calcMax wird Runtime
 aufgerufen. Also pro Expandierungen: → O(n) Runtime mehr!) Die „Informed Heuristic Search"
 bezieht sich hier auf das Modell des Greedy-Algorithmen, was bedeutet, dass jeder Expandierte
@@ -233,36 +224,31 @@ einfachen und simplen Grund, weil es sich in diesem Programm um einen dynamische
 handelt und Expandierungen als Zustand in der OpenList gespeichert werden.
 Die Expandierungen reduzieren sich jedoch trotzdem drastisch:
 
-Expandierungen: Brutforce Informed Heuristic Search
-Beispiel 1: 50 4
-Beispiel 4: 296 16
-Beispiel 6: Weit über >40.000.000! 481398
+| `Expandierungen` |  Brutforce | Informed Heuristic Search |
+:-------------------------:|:-------------------------:|:-------------------------:|
+Beispiel 1: | 50 |4
+Beispiel 4: | 296 | 16
+Beispiel 6: | Weit über >40.000.000! | 481398 
 
-Runtime: Brutforce Informed Heuristic Search
-Beispiel 1: ~8,4ms ~6ms
-Beispiel 4: ~20,6ms ~8,2ms
-Beispiel 6: >10min ~4,7sek
+| `Runtime` |  Brutforce | Informed Heuristic Search |
+:-------------------------:|:-------------------------:|:-------------------------:|
+Beispiel 1: | ~8,4ms | ~6ms
+Beispiel 4: | ~20,6ms | ~8,2ms
+Beispiel 6: | >10min | ~4,7sek
 
 Laufzeitfaktoren pro Expansion:
-Bruteforce Informed Heuristic Search
-O(m(n)) → durchsuchen der Kanten von v → v'
-O(2*(m+n)) → O(m+n) ==>kopieren der Listen
-Falls v.battalt < v.battneu => O(m(n))→extendList
-Falls v.isDone → O(m(n)) => löschen Kanten
-von v
-
-O(m(n)) → durchsuchen der Kanten von v →v'
-O(2*(m+n)) → O(m+n) ==>kopieren der Listen
-Falls v.battalt < v.battneu => O(m(n))→extendList
-Falls v.isDone → O(m(n)) => löschen Kanten
-von v
-Helper.calcMax, da dynamischer Abgleich →
-O(n)
-Helper.copyDistMatrix → O(SCC.size)
+| Bruteforce |   Informed Heuristic Search | 
+:-------------------------:|:-------------------------:
+O(m(n)) → durchsuchen der Kanten von v → v'  | O(m(n)) → durchsuchen der Kanten von v →v'
+O(2*(m+n)) → O(m+n) ==>kopieren der Listen |  O(2*(m+n)) → O(m+n) ==>kopieren der Listen
+Falls v.battalt < v.battneu => O(m(n))→extendList |  Falls v.battalt < v.battneu => O(m(n))→extendList
+Falls v.isDone → O(m(n)) => löschen Kanten von v | Falls v.isDone → O(m(n)) => löschen Kanten von v
+/ | Helper.calcMax, da dynamischer Abgleich →  O(n)
+/ | Helper.copyDistMatrix → O(SCC.size)  
 
 Wie man unschwer erkennen kann, schlägt die Informed Heuristic Search: IHS den banalen
 Brutforce Algorithms, trotz extra Runtime pro Expandierung bei Weitem. Die Kostenfunktion der
-IHS^9 , beläuft sich auf Kosten f(x) = h(x). Mit h(x) → gesAnzahlMax-gesAnzahlcurrent. Was IHS als
+[IHS](http://gki.informatik.uni-freiburg.de/teaching/ss13/gki/lectures/ai04.pdf "Informed Heuristic Search"), beläuft sich auf Kosten f(x) = h(x). Mit h(x) → gesAnzahlMax-gesAnzahlcurrent. Was IHS als
 eine greedy(„gierige") Suche definiert.
 Doch das alleinige Unterteilen des Graphen in SCC-Gruppen, genügt nicht, denn nicht bei allen
 Spielinstanzen(Beispielen), lässt sich der Graph in mehrere SCC-Gruppen aufteilen. Siehe Bsp: 2,
@@ -272,44 +258,47 @@ nun noch andere Methoden zu ermitteln, um das Aufteilen des Graphen in
 mehrere Gruppen, des Expandierens willen, so einfach wie möglich zu gestalten.
 (II) Der andere Ansatz bedient sich der geografischen Abbildung des Graphen. So werden z.B. die
 Graphen:
+| Vorher |  Nachher | 
+:-------------------------:|:-------------------------:|
+![](https://i.ibb.co/ZgjGXKQ/1.png)  |  ![](https://i.ibb.co/q9cYZpZ/2.png) |
 
+| Vorher |  Nachher | 
+:-------------------------:|:-------------------------:|
+![](https://i.ibb.co/fxh1q8m/3.png)  |  ![](https://i.ibb.co/h7RWQ07/4.png) |
 aufgeteilt. Sinn und Zweck dieser Blöcke ist es, wie auch schon bei Ansatz (I), die Anzahl V und
 somit auch die Expansionen von Ginit drastisch zu reduzieren. So kann man z.B. bei einer geraden
-Anzahl an Knoten im k*k Feld: |Vneu| = |Valt|/4. Geht man einen Schritt weiter, so könnte man immer
+Anzahl an Knoten im k*k Feld: |Vneu| = |V<sub>alt</sub>|/4. Geht man einen Schritt weiter, so könnte man immer
 größere Blöcke nehmen, was die Laufzeit, jedoch nur bis zu einem gewissen Punkt reduziert, da
 irgendwann 1 Block:= 100 groß. Deshalb verwendet der Algorithmus nur 2x2 Blöcke für gerade-,
 3x3 und 2x3 Blöcke für ungerade Graphen, um einen allgemeinen Standard zu halten.
 Es wurden diese Normen gewählt, da sie sich bei verschiedenen Tests als schnell berechenbar und
-flexibel darstellten. Anzumerken ist hierbei, dass (II) als Ersatz für (I) gilt, wenn: |SCCanzahl| == 2.
+flexibel darstellten. Anzumerken ist hierbei, dass (II) als Ersatz für (I) gilt, wenn: |SCC<sub>anzahl</sub>| == 2.
 Der Vorgang, von (I) bleibt allerdings vorerst der Gleiche. Die Laufzeit für das generieren,
 verändert sich entsprechend von O(|V|+|E|) → O(g(k)). Wobei g(k) natürlich abhängig von der
 Größe ist. Im Beispiel Obenlinks, hätte g(k) eine Laufzeit von O(4)→O(1)=konstant, was natürlich
 im Vergleich zu Tarjan eine gewaltige Reduzierung ist.
 
-6. Priority Queue
+#### 1.6. Priority Queue
 
 Die wohl wichtigste Methode, um gezielt einen möglichen Weg zu finden, ist die Kostenfunktion.
 Kleine Änderungen dieser, führen zu großen Runtime Verbesserungen, der möglichen Beispiele. Es
-gilt jedoch trotzdem, bei |ae| := Anzahl Expansions, dass |aegreedy| = |aefolgend|, da der w.c.^10 gleich
-bleibt! Die jetzige „gierige" Kostenfunktion, beläuft sich auf: f(x) = h(x). Um nun eine gezieltere
+gilt jedoch trotzdem, bei |ae| := Anzahl Expansions, dass |ae<sub>greedy</sub>| = |ae<sub>folgend</sub>|, da der [w.c.](https://de.wikipedia.org/wiki/Worst_Case "worst case") gleich
+bleibt! Die jetzige „gierige" Kostenfunktion, beläuft sich auf: 
+> f(x) = h(x). 
 
-9 Informed Heuristic Search
-10 Hier: worst case
-
-Suche zu starten, wird dass Modell, des Bergsteigeralgorithmus^11 , mit runtergehen implementiert.
-Das heißt auf die SZK und Geo-Gruppen Modelle bezogen, dass f(x) versucht, jede Gruppe(Station
-in dieser Analogie) einzeln abzuarbeiten, um anschließend jede abgeschlossen Gruppe, als weitere
+Um nun eine gezieltere Suche zu starten, wird dass Modell, des [Bergsteigeralgorithmus](https://www.edureka.co/blog/hill-climbing-algorithm-ai/#hillclimbingapplications) , mit runtergehen implementiert. Das heißt auf die SZK und Geo-Gruppen Modelle bezogen, dass f(x) versucht, jede Gruppe(Station in dieser Analogie) einzeln abzuarbeiten, um anschließend jede abgeschlossen Gruppe, als weitere
 Stufe anzusehen. Auf die Beispiele bezogen ergibt sich somit eine Laufzeit von:
 
-Runtime: Informed Heuristic Search
-Beispiel 1: ~6ms
-Beispiel 2: ~0,118sek
-Beispiel 3: ~0,97sek
-Beispiel 4: ~8,2ms
-Beispiel 5: 0ms
-Beispiel 6: ~4,7sek
+| `Runtime` |  Informed Heuristic Search | 
+:-------------------------:|:-------------------------:|
+Beispiel 1: |  ~6ms
+Beispiel 2: |  ~0,118sek
+Beispiel 3: | ~0,97sek
+Beispiel 4: | ~8,2ms
+Beispiel 5: | 0ms
+Beispiel 6: | ~4,7sek
 
-7. Preprocess vs Runtime
+#### 1.7. Preprocess vs Runtime
 
 Da die Diagramme in siehe SZK und Geo-Gruppen deutlich machen, dass das Gruppieren eine
 erhebliche Laufzeitsteigerung mit sich bringt, kam die Idee, den SCC zu Maintainen, also während
@@ -317,37 +306,44 @@ jeder Expansion den SCC mit allem drum und dran neu zu generieren um Runtime, fa
 Expandierungen zu bestimmen. Doch die praktische Umsetzung zeigte, dass dies länger dauern
 würde, als ohne. Dies hat zwei Gründe:
 
-    Es wird pro Expandierung: O(|V|+|E| + |E|) → O(|V|+2*|E|) → O(|V|+|Emehr|) → O(|V|+|E|),
+  - Es wird pro Expandierung: O(|V|+|E| + |E|) → O(|V|+2*|E|) → O(|V|+|E<sub>mehr</sub>|) → O(|V|+|E|),
     Laufzeit mehr benötigt.
-    Doch der eigentliche Gedanke, war eine Verkürzung der Expandierungen, was sich aber als
+  - Doch der eigentliche Gedanke, war eine Verkürzung der Expandierungen, was sich aber als
     falsch rausstellte, da sich nun viele kleine Gruppen, während des Expandierens/Suchens bilden, die
     zwar zu lokalen anderen SCC Gruppen expandieren konnten, jedoch global falsch waren.
 
-Wie man in diesem Beispiel unschwer erkennen kann, gibt es keinen Weg von SCC 0 →SCC 1 (links)
+
+![](https://i.ibb.co/qsh7dRD/1.png)
+Wie man in diesem Beispiel unschwer erkennen kann, gibt es keinen Weg von SCC0 →SCC 1 (links)
 was jedoch von dem Runtime-SCC Algorithmus nicht gesehen wird, da nur nach den lokalen
 Nachbarn gesucht wird! Würde man den Runtime/Laufzeit-Algorithmus um den globalen Faktor
 erweitern, würde dass entsprechend O(|SCC|²) Zeit extra in Anspruch nehmen, was gegen die
 Laufzeit Implementierung spricht! Daher habe ich es beim Vorverarbeiten, aus den gegebenen
 Gründen belassen.
 
-11 https://www.edureka.co/blog/hill-climbing-algorithm-ai/#hillclimbingapplications
 
-8. OpenList/Zustandsspeicherung
+#### 1.8. OpenList/Zustandsspeicherung
 
 Pro Zustand werden 7 Faktoren gespeichert, welche für das Expandieren und Überprüfen, wie in
 den vorherigen Kapiteln besprochen von Nöten sind. Es ist noch anzumerken, dass Variationen der
 OpenList, etwa der rekursiven Verwaltung per Pfad-Speicherung in der Praxis scheitern, da sich die
 Laufzeit entsprechend um O(n[m]) pro Löschung addiert. Um nun auf die 7 Parameter zu kommen:
 Zustand z:
-[0] = e([2]), [1] = e[v'], [2] = Energieges, [3] = adjList, [4] = bList, [5] = DistanzMatrix, [6] = Pfad
+```sh
+[0] = e([2]), 
+[1] = e[v'], 
+[2] = Energieges, 
+[3] = adjList, 
+[4] = bList,
+[5] = DistanzMatrix, 
+[6] = Pfad
+```
 
-9. Speicheranalyse der OpenList
+#### 1.9. Speicheranalyse der OpenList
 
-pro Expansion
-Bruteforce: O(1), O(1), O(1), O(n), O(m), O(SCCMatrix),
-O(1) => O(n+m+|SCCMatrix|)
-Informed Heuristic Search: O(1), O(1), O(1), O(n), O(m), O(SCCMatrix),
-O(1) => O(n+m+|SCCMatrix|)
+| Bruteforce |  Informed Heuristic Search | 
+:-------------------------:|:-------------------------:|
+O(1), O(1), O(1), O(n), O(m), O(SCCMatrix), O(1) => O(n+m+\|SCCMatrix\|) | O(1), O(1), O(1), O(n), O(m), O(SCCMatrix), O(1) => O(n+m+\|SCCMatrix\|)
 
 Wobei anzumerken ist, dass für die OpenList(PriorityQueue): pq, bei Gendlich nie gilt: |pq| ≠ ∞, weil
 |E| ≠ ∞, somit hält sich die Speicherauslastung pro Expansion im Rahmen. Da auch Pfade falsch
@@ -355,30 +351,29 @@ sein können, besteht kein Bedarf diesen weiterhin in eine List zu speichern, we
 einen neuen macht. Würde der Algorithmus eine Closed List besitzen, so könnte der Speicher bis in
 das Unendliche steigen.
 
-10. Besonderheiten in der Geo-Gruppierung
+#### 1.10. Besonderheiten in der Geo-Gruppierung
 
 Da die Gruppierung, je nach Größe des Spielfeldes: k variiert, ist es von dringenden Nöten,
 nochmals darauf einzugehen. Wie bereits festgestellt wurde, kann ein gerades Spielfeld je in 2x
 Blöcke aufgeteilt werden, was zu einer Halbierung des Suchraumes führt. Doch muss bei einer
 ungeraden Aufteilung auf die Größe des Spielfeldes geachtet werden. So ist es nicht immer
-möglich, ein Muster für jedes ungerade Feld zu wählen. Deshalb habe ich ein Clusterverfahren^12
+möglich, ein Muster für jedes ungerade Feld zu wählen. Deshalb habe ich ein [Clusterverfahren](https://i11www.iti.kit.edu/_media/teaching/sommer2007/graphclustering/ausarbeitung-bc.pdf "bezogen auf den sogenannten: HPA* Algorithmus(Variation von A*), der ähnlich wie die Gateway-Heuristik siehe
+Seite 2 das 2D Feld in Abschnitt unterteilt.")
 entwickelt, welches erlaubt die ungeraden Spielfelder in drei Hauptgruppen einzuteilen. Das
-Clusterverfahren besteht auf der Erkenntnis, dass kungerade %3=0 ∨ 1 2. Diese Isomorphie hat zur ∨
-Folge, dass man für jedes Ergebnis je eine einheitliche Aufteilung vornehmen kann. Dass Verfahren
-beginnt das Spielfeld von linksoben ausgehend, bis kungerade-(kungerade%3)*2 zu Unterteilen. Die
+Clusterverfahren besteht auf der Erkenntnis, dass k<sub>ungerade</sub>%3=0∨1∨2. Diese Isomorphie hat zur Folge, dass man für jedes Ergebnis je eine einheitliche Aufteilung vornehmen kann. Dass Verfahren
+beginnt das Spielfeld von linksoben ausgehend, bis kungerade-(k<sub>ungerade</sub>%3)*2 zu Unterteilen. Die
 Motivation dahinter, lässt sich am besten anhand von Beispielen, welche als Repräsentation der
 entsprechenden Hauptgruppen Dienen erklären:
-(3%3)2=0 (5%3)2=2 (7%3)2=4 (9%3)2=
+
+| (3%3)2=0 |  (5%3)2=2 | (7%3)2=4 | (9%3)2=0 | 
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+![](https://i.ibb.co/K9fb101/1.png) | ![](https://i.ibb.co/T4JPkVX/2.png) | ![](https://i.ibb.co/m8sFGTC/3.png) | ![](https://i.ibb.co/TBPwSm5/4.png)
 
 Wie man sehen kann, werden die Bereiche bis zu dem Ergebnis des Termes oben in 3er Blöcke
 unterteilt und dann je Ergebnis individuell unterteilt. Dabei bleiben bei jedem Ergebnis/Isomorph
 die Reihen außen immer gleich.
 
-12 Vgl. https://i11www.iti.kit.edu/_media/teaching/sommer2007/graphclustering/ausarbeitung-bc.pdf aber zudem auch
-bezogen auf den sogenannten: HPA* Algorithmus(Variation von A*), der ähnlich wie die Gateway-Heuristik siehe
-Seite 2 das 2D Feld in Abschnitt unterteilt.
-
-11. Optimierung der Gruppierung
+#### 11. Optimierung der Gruppierung
 
 Da jedoch nicht alle Spielfelder ein einheitliches Muster, wie z.B. in 2 & 3 besitzen, sondern
 teilweise auch komplexer aufgebaut sind, wurde das Clusterverfahren zur Bestimmung der Gruppen
