@@ -120,7 +120,9 @@ Agentenbatterie von dem minimum ausgehend immer plus zwei haben.
 \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
 \end{equation*}
 
-\sum_{i=1}^n min(v->v')+(i*2)
+```math
+SE = \frac{\sigma}{\sqrt{n}}
+```
 
 Um jetzt nicht jede einzelne Kante in dem dynamischen Graphen, der schließlich für eine
 Reduzierung der Kanten gedacht ist in dem Graph abzubilden, wird nur der kürzeste Pfad von
