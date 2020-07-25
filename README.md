@@ -65,7 +65,7 @@ somit eine große Rolle spielt, reduziert sich also von
 Wobei für die Anzahl Knoten n gilt: 
 > n <= k*k.
 
-Der Fall n = k*k(zudem auch n ≈ k) wird später im Abschnitt: SZK und Geo-Gruppen behandelt. Um nun die einzelnen Batterien entsprechend zu identifizieren, bekommt jede Batterie, inklusive der des Agenten(grün) eine Nummer/Index zugewiesen. Der Agent bekommt die Nummer 0, während die anderen nach Inputreihenfolge sortiert werden. Jedes Objekt der Klasse Batterie, besitzt entsprechend x und y Koordinate im k*k Feld, Anzahl an Energie, ein Boolean, zur
+Der Fall n = k\*k(zudem auch n ≈ k) wird später im Abschnitt: SZK und Geo-Gruppen behandelt. Um nun die einzelnen Batterien entsprechend zu identifizieren, bekommt jede Batterie, inklusive der des Agenten(grün) eine Nummer/Index zugewiesen. Der Agent bekommt die Nummer 0, während die anderen nach Inputreihenfolge sortiert werden. Jedes Objekt der Klasse Batterie, besitzt entsprechend x und y Koordinate im k\*k Feld, Anzahl an Energie, ein Boolean, zur
 Überprüfung, ob die Batterie abgearbeitet wurde. Wobei gilt:
 
 > {v|v<sub>index</sub>.energie=0}→v<sub>index</sub>.isDone=true. 
