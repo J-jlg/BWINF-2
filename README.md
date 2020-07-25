@@ -8,10 +8,10 @@
 
 ### 1.a) Lösungsidee/Abstrakt:
 
-Ziel des Aufgabenteils ist es, einen Weg bzw. Pfad so zu finden, dass alle Batterien, wenn möglich entladen werden. Die Aufgabenstellung lässt die Art und Weise, also zudem auch die Qualität des Weges offen, was auf die Benutzung eines heuristischen Suchverfahrens als Optimum schließen lässt. Da es sich dabei um eine [offline-Suche](https://xlinux.nist.gov/dads/HTML/offline.html) handelt, können unter Anbetracht der Laufzeit,beliebig viele Vorverarbeitungen stattfinden, um ungültige Wege, die schlussendlich nicht in den Zielzustand führen, auszuschließen. Dies gelingt durch das grundlegende Vermischen einer [Sackgassenerkennungs- und Gruppierungsheuristik](https://www.uni-kassel.de/eecs/fileadmin/datas/fb16/Fachgebiete/PLM/Dokumente/Master_Bachelor_Diplom/masterarbeit.pdf "Aus dem Englischen: Gateway Heuristik und Dead-End Heuristik:
+Ziel des Aufgabenteils ist es, einen Weg bzw. Pfad so zu finden, dass alle Batterien, wenn möglich entladen werden. Die Aufgabenstellung lässt die Art und Weise, also zudem auch die Qualität des Weges offen, was auf die Benutzung eines heuristischen Suchverfahrens als Optimum schließen lässt. Da es sich dabei um eine [offline-Suche](https://xlinux.nist.gov/dads/HTML/offline.html) handelt, können unter Anbetracht der Laufzeit, beliebig viele Vorverarbeitungen stattfinden, um ungültige Wege, die schlussendlich nicht in den Zielzustand führen, auszuschließen. Dies gelingt durch das grundlegende Vermischen einer [Sackgassenerkennungs- und Gruppierungsheuristik](https://www.uni-kassel.de/eecs/fileadmin/datas/fb16/Fachgebiete/PLM/Dokumente/Master_Bachelor_Diplom/masterarbeit.pdf "Aus dem Englischen: Gateway Heuristik und Dead-End Heuristik:
 Vgl.Yngvi Björnson, Kári Halldórson, “Improved Heuristics for Optimal Pathfinding on Game Maps”, 2006,
 Reykjavik University, Iceland"). Doch zuerst einmal gilt es das Problem so zu
-Modellieren, dass man es mit klassischen Algorithmen bearbeiten kann. Dafür benötigt man in
+modellieren, dass man es mit klassischen Algorithmen bearbeiten kann. Dafür benötigt man in
 diesem Fall einen Graphen.
 
 #### 1.1. Modellierung der Knoten:
