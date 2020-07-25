@@ -141,7 +141,7 @@ dass der Roboter mittels min(2) Schritten bzw. auch wie bei v→v' jeweils plus 
 v → v = e(v,v) geht. Dabei ist wieder zu beachten, dass dies nur in gewissen Fällen funktioniert,
 wenn mindestens ein Feld Mitteles der Manhattandistanz von dem Node frei ist, betragen die
 Kosten von e: 2 Schritte und sobald 2 freie Felder Kombinationen von dem Node aus frei sind, kann
-v mit 2*x(x: 0...∞) Kosten nach v. Natürlich gilt auch hier, dass Nodestart 0(grün) zu sich selbst
+v mit 2\*x(x: 0...∞) Kosten nach v. Natürlich gilt auch hier, dass Nodestart 0(grün) zu sich selbst
 logischerweiße keine Kante(n) hat.
 
 > Kante k(2) → IsExpandable: 
@@ -165,15 +165,15 @@ wie folgt aussehen:
 Natürlich wird die Breitensuche nur entsprechend bis zur Energie des Nodes gemacht. Die generelle
 Laufzeit für das Generieren aller Kanten in der AdjazenzList beträgt: 
 > O(nd) - w.c.
->(Distanz d := 4*e(n)) 
+>(Distanz d := 4\*e(n)) 
 
 Wobei e(n) für die Energie des Knotens n steht. Für die Ausnahmen(zu sich
 selbst/Agent bzw. Batt: 0 beachten): wird entsprechend max O(3) → O(1) Zeit pro BFS benötigt,
 was nicht erwähnenswert ist. Die Laufzeit der BFS ist zwar relativ hoch, doch ist sie für eine
-korrekte Lösung nötig. Wobei 4*e(n) maximal k*k Nodes besuchen kann. → d <= k*k-2(wobei -
+korrekte Lösung nötig. Wobei 4\*e(n) maximal \*k Nodes besuchen kann. → d <= k\*k-2(wobei -
 für den Knoten selbst, sowie den des Agenten steht). Um nun für den Fall vorbereitet zu sein, dass die neue Batterie, nach einem Wechsel größer ist, als die Alte, wird eine Extraliste angelegt. Diese AdjazenzListe: externList, speichert für jeden Knoten mit Hilfe einer Breitensuche wie oben, die Kanten, die bei dem maximal Möglichen, was in die
 Batterie reinkommen kann, entstehen können. Das Maximum, wird mit Hilfe der [SZK](https://www.geeksforgeeks.org/strongly-connected-components/ "Die deutsche Abkürzung der Starken Zusammenhangskomponente. (Strongly connected component)") ermittelt, worauf später noch weiter eingegangen wird. Was aber der markante Unterschied zu dem statischen Graphen ist, dass die externList sekundär und nicht primär gedacht ist, was der [Dead-End Detection](https://www.uni-kassel.de/eecs/fileadmin/datas/fb16/Fachgebiete/PLM/Dokumente/Master_Bachelor_Diplom/masterarbeit.pdf "Vgl. Sackgassenerkennung") etc. nicht im Weg steht. Man verwendet hier also nochmals eine weitere O(nd) Suche, was sich allerdings dadurch ausgleicht, dass später für jede neue (höhere) Batterienanzahl in v, eine weitere Breitensuche getätigt werden müsste. Und der Unterschied zwischen O(m[n]) und
-O(4*e(n)) ist wohl deutlich klar.
+O(4\*e(n)) ist wohl deutlich klar.
 
 #### 1.4. Zielzustand
 
@@ -195,7 +195,7 @@ werden nun die einzelnen Knoten mittels zweier Verfahren in kleinere Gruppen unt
 (I)Der erste Algorithmus findet die stark zusammenhängende Komponenten SZK. Und kann somit
 Aussagen darüber treffen, welche Knoten nahe aneinander sind, bzw. ob sie von einander erreichbar
 sind. Ich habe hier den Algorithmus von Tarjan implementiert, [weil er mit seiner Laufzeit von
-O(V+E) in diesen Fall eine optimale Laufzeit hat.](https://de.wikipedia.org/wiki/Algorithmus_von_Tarjan_zur_Bestimmung_starker_Zusammenhangskomponenten "Kosaraju's algorithmus O(V^2) würde im a.c. mehr Laufzeit beanspruchen. Vorallem in Fällen, wie k=n*n würde die
+O(V+E) in diesen Fall eine optimale Laufzeit hat.](https://de.wikipedia.org/wiki/Algorithmus_von_Tarjan_zur_Bestimmung_starker_Zusammenhangskomponenten "Kosaraju's algorithmus O(V^2) würde im a.c. mehr Laufzeit beanspruchen. Vorallem in Fällen, wie k=n\*n würde die
 Lauzeit drastisch fallen.")
 
 | Beispiel 5 |  SCC von Beispiel 5 | 
@@ -205,7 +205,7 @@ Lauzeit drastisch fallen.")
 Warum dieser Algorithmus für die Heuristik so mächtig ist, zeigt sich gleich noch. Vorher wird von
 jeder SCC Gruppe das Maximum ausgerechnet mit der Methode Helper.calcMax → O(n). → Grün
 anschließend noch mit einer weiteren Breitensuche jeweils die kürzesten Distanzen von SCC→
-SCC' gefunden und in einer adjSCCMatrix übertragen → O(n*4e(n)), jedoch ist nun alles
+SCC' gefunden und in einer adjSCCMatrix übertragen → O(n\*4e(n)), jedoch ist nun alles
 vorverarbeitet(Runtime wird später noch gezeigt). Hier wird nun auch das Maximum für die
 externList bestimmt, indem geschaut wird, was ist das Maximum an Energie, was eine SCC Gruppe
 erreichen kann. Dieser individuelle maximale Wert für jede SCC Gruppe wird anschließend als
@@ -240,7 +240,7 @@ Laufzeitfaktoren pro Expansion:
 | Bruteforce |   Informed Heuristic Search | 
 :-------------------------:|:-------------------------:
 O(m(n)) → durchsuchen der Kanten von v → v'  | O(m(n)) → durchsuchen der Kanten von v →v'
-O(2*(m+n)) → O(m+n) ==>kopieren der Listen |  O(2*(m+n)) → O(m+n) ==>kopieren der Listen
+O(\*(m+n)) → O(m+n) ==>kopieren der Listen |  O(2\*(m+n)) → O(m+n) ==>kopieren der Listen
 Falls v.battalt < v.battneu => O(m(n))→extendList |  Falls v.battalt < v.battneu => O(m(n))→extendList
 Falls v.isDone → O(m(n)) => löschen Kanten von v | Falls v.isDone → O(m(n)) => löschen Kanten von v
 / | Helper.calcMax, da dynamischer Abgleich →  O(n)
@@ -268,7 +268,7 @@ Graphen:
 
 aufgeteilt. Sinn und Zweck dieser Blöcke ist es, wie auch schon bei Ansatz (I), die Anzahl V und
 somit auch die Expansionen von Ginit drastisch zu reduzieren. So kann man z.B. bei einer geraden
-Anzahl an Knoten im k*k Feld: |Vneu| = |V<sub>alt</sub>|/4. Geht man einen Schritt weiter, so könnte man immer
+Anzahl an Knoten im k\*k Feld: |Vneu| = |V<sub>alt</sub>|/4. Geht man einen Schritt weiter, so könnte man immer
 größere Blöcke nehmen, was die Laufzeit, jedoch nur bis zu einem gewissen Punkt reduziert, da
 irgendwann 1 Block:= 100 groß. Deshalb verwendet der Algorithmus nur 2x2 Blöcke für gerade-,
 3x3 und 2x3 Blöcke für ungerade Graphen, um einen allgemeinen Standard zu halten.
@@ -307,7 +307,7 @@ jeder Expansion den SCC mit allem drum und dran neu zu generieren um Runtime, fa
 Expandierungen zu bestimmen. Doch die praktische Umsetzung zeigte, dass dies länger dauern
 würde, als ohne. Dies hat zwei Gründe:
 
-  - Es wird pro Expandierung: O(|V|+|E| + |E|) → O(|V|+2*|E|) → O(|V|+|E<sub>mehr</sub>|) → O(|V|+|E|),
+  - Es wird pro Expandierung: O(|V|+|E| + |E|) → O(|V|+2\*|E|) → O(|V|+|E<sub>mehr</sub>|) → O(|V|+|E|),
     Laufzeit mehr benötigt.
   - Doch der eigentliche Gedanke, war eine Verkürzung der Expandierungen, was sich aber als
     falsch rausstellte, da sich nun viele kleine Gruppen, während des Expandierens/Suchens bilden, die
@@ -362,7 +362,7 @@ möglich, ein Muster für jedes ungerade Feld zu wählen. Deshalb habe ich ein [
 Seite 2 das 2D Feld in Abschnitt unterteilt.")
 entwickelt, welches erlaubt die ungeraden Spielfelder in drei Hauptgruppen einzuteilen. Das
 Clusterverfahren besteht auf der Erkenntnis, dass k<sub>ungerade</sub>%3=0∨1∨2. Diese Isomorphie hat zur Folge, dass man für jedes Ergebnis je eine einheitliche Aufteilung vornehmen kann. Dass Verfahren
-beginnt das Spielfeld von linksoben ausgehend, bis kungerade-(k<sub>ungerade</sub>%3)*2 zu Unterteilen. Die
+beginnt das Spielfeld von linksoben ausgehend, bis kungerade-(k<sub>ungerade</sub>%3)\*2 zu Unterteilen. Die
 Motivation dahinter, lässt sich am besten anhand von Beispielen, welche als Repräsentation der
 entsprechenden Hauptgruppen Dienen erklären:
 
