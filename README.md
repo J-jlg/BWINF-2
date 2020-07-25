@@ -80,7 +80,7 @@ gewählt werden. Es kommen zwei Modelle infrage, das des statischen- und das des
 Graphen. Entweder man erschafft einen Graphen, der alle Kanten behält und für jeden neuen Pfad
 die Kosten des Weges mit der Energie des entsprechenden Knotens abgleicht(statisch) oder man
 nimmt für den Graphen nur das nötigste(Reichweite=Energie) und löscht bspw. alle Kanten nach
-erfolgreichen Abarbeiten des Knotens(v'→v mit eingeschlossen). Ist die Energie einer Batterie nach
+erfolgreichen abarbeiten des Knotens(v'→v mit eingeschlossen). Ist die Energie einer Batterie nach
 einem Wechsel jedoch höher als die alte Energie(v.energieneu>v.energyalt), so werden dem Knoten v
 alle möglichen Kanten aus einer externen Liste(siehe Generieren von Kanten ) zugewiesen. Der
 folgende Operator Expandieren bezieht sich auf das heuristische Erweitern eines Pfades, durch wählen einer Kante e(v,v') oder e(v, v), also somit auf ein kostengebundenes Handeln jeglicher Form.
