@@ -260,11 +260,11 @@ mehrere Gruppen, des Expandierens willen, so einfach wie möglich zu gestalten.
 Graphen:
 | Vorher |  Nachher | 
 :-------------------------:|:-------------------------:|
-![](https://iili.io/dyhBHl.png)  |  ![](https://iili.io/dyhCR2.png) |
+![](https://iili.io/dyjRLX.png)  |  ![](https://iili.io/dyhCR2.png) |
 
 | Vorher |  Nachher | 
 :-------------------------:|:-------------------------:|
-![](https://iili.io/dyjzep.png)  |  ![](https://iili.io/dyjImN.png) |
+![](https://iili.io/dyj7Bn.png)  |  ![](https://iili.io/dyjImN.png) |
 
 aufgeteilt. Sinn und Zweck dieser Blöcke ist es, wie auch schon bei Ansatz (I), die Anzahl V und
 somit auch die Expansionen von Ginit drastisch zu reduzieren. So kann man z.B. bei einer geraden
@@ -368,7 +368,7 @@ entsprechenden Hauptgruppen Dienen erklären:
 
 | (3%3)2=0 |  (5%3)2=2 | (7%3)2=4 | (9%3)2=0 | 
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
-![](https://iili.io/dyjAXt.png) | ![](https://i.ibb.co/T4JPkVX/2.png) | ![](https://i.ibb.co/m8sFGTC/3.png) | ![](https://i.ibb.co/TBPwSm5/4.png)
+![](https://iili.io/dyjAXt.png) | ![](https://iili.io/dyjY1s.png) | ![](https://iili.io/dyjarG.png) | ![](https://iili.io/dyjl2f.png)
 
 Wie man sehen kann, werden die Bereiche bis zu dem Ergebnis des Termes oben in 3er Blöcke
 unterteilt und dann je Ergebnis individuell unterteilt. Dabei bleiben bei jedem Ergebnis/Isomorph
@@ -381,9 +381,9 @@ teilweise auch komplexer aufgebaut sind, wurde das Clusterverfahren zur Bestimmu
 um die Allgemeinheit optimiert. Folgende Beispiele wäre suboptimal für den bisweilen
 Clusteralgorithmus:
 
-![](https://i.ibb.co/gD2cPvY/1.png)
-![](https://i.ibb.co/ZHC9fXP/2.png)
-![](https://i.ibb.co/vYp2Vbz/3.png)
+![](https://iili.io/dyj1kl.png)
+![](https://iili.io/dyjMIS.png)
+![](https://iili.io/dyjVh7.png)
 
 Es würde in diesen Beispielen nichtnur die Performance, wegen der unnötigen Vorverarbeitung
 leiden, sondern auch die Effizienz und Zielfindung(Heuristik). Wie die Beispiele veranschaulichen,
@@ -409,7 +409,7 @@ Dies spiegelt sich in der konstanten Laufzeit von O(1) wieder.") getätigt. Sie 
 letzten Knoten des Spielfeldes zu ermitteln. Das hierfür verwendete Verfahren wird anhand des
 folgenden Beispieles(Zustand) deutlich:
 
-![](https://i.ibb.co/m90DpNk/1.png)
+![](https://iili.io/dyjWQ9.png)
 
 Wie man erkennen kann, muss entweder die Rote oder einer der beiden gelben Batterien, das Letzte
 zu befahrene Node sein. Die EndNodeDetection schaut sich also grundlegend solche Extrempunkte,
@@ -431,7 +431,7 @@ drumrum, dass das Feld und somit auch die Anzahl Batterien theoretisch unendlich
 könnte, was die bisherigbenutzten Cluster- und Suchverfahren ab einer gewissen Größe entkräftet.
 
 #### 14. GUI
-![](https://i.ibb.co/zSbJGYG/1.png)  
+![](https://iili.io/dyjhBe.png)  
 Die grafische Oberfläche besteht aus dem Spielfeld(Mitte) und den Buttons(Rechts). Der Roboter
 ist als Grüner Kreis dargestellt und die Ersatzbatterien als Graue kleinere Kreise. Das Spielfeld
 kann entweder als Textdatei mit einem Filechooser per „Lade Datei" Button oder manuell als
@@ -477,7 +477,7 @@ Hoch,Rechts,Rechts,Hoch,Hoch,Hoch,Runter,Runter,Runter,Hoch,Hoch,Links,Links,
 Links,Links,Runter,Hoch,
 ```
 
-![](https://i.ibb.co/HNtJgwX/1.png)
+![](https://iili.io/dyjwrb.png)
 
 ```sh
 1) Eingabe:
@@ -585,7 +585,7 @@ Links,Links,Runter,Hoch,
 10,10,1
 ```
 
-![](https://i.ibb.co/6BJ8tSs/1.png)
+![](https://iili.io/dyjO2j.png)
 
 ```sh
 Ausgabe:
@@ -598,7 +598,7 @@ Hoch,Rechts,Hoch,Links,Hoch,Rechts,Rechts,Rechts,Runter,Links,Runter,Rechts,Runt
 ter,Rechts,Runter,Links,Runter,Rechts,Runter,Links,Runter,Rechts,Runter,Links,Links,
 ```
 
-![](https://i.ibb.co/30S9QQ7/1.png)
+![](https://iili.io/dyjeYx.png)
 
 ```sh
 2) Eingabe:
@@ -727,7 +727,7 @@ ter,Rechts,Runter,Links,Runter,Rechts,Runter,Links,Runter,Rechts,Runter,Links,Li
 11,11,2
 ```
 
-![](https://i.ibb.co/rw5pChV/1.png)
+![](https://iili.io/dyjkkQ.png)
 
 ```sh
 Ausgabe:
@@ -750,7 +750,7 @@ Hoch,Runter,Runter,Links,Links,Links,Rechts,Links,Hoch,Rechts,Rechts,Hoch,Links,
 ,Links,Rechts,Rechts,Runter,Links,Runter,Links,
 ```
 
-![](https://i.ibb.co/n8PmPSx/1.png)
+![](https://iili.io/dyjSTB.png)
 
 ```sh
 3) Eingabe:
@@ -762,13 +762,13 @@ Hoch,Runter,Runter,Links,Links,Links,Rechts,Links,Hoch,Rechts,Rechts,Hoch,Links,
 6,2,5
 ```
 
-![](https://i.ibb.co/jVgKbKP/1.png)
+![](https://iili.io/dyjUhP.png)
 
 ```sh
 Ausgabe:
 ```
 
-![](https://i.ibb.co/fMZQ3Xp/1.png)
+![](https://iili.io/dyjgQ1.png)
 
 ```sh
 4) Eingabe:
@@ -777,7 +777,7 @@ Ausgabe:
 0
 ```
 
-![](https://i.ibb.co/RStm7yT/1.png)
+![](https://iili.io/dyj4CF.png)
 
 ```sh
 Ausgabe:
@@ -785,7 +785,7 @@ Links,Rechts,Links,Rechts,Links,Rechts,Links,Rechts,Links,Rechts,Links,Rechts,Li
 ks,Rechts,Links,Rechts,Links,Rechts,
 ```
 
-![](https://i.ibb.co/wQKkR6v/1.png)
+![](https://iili.io/dyj6Eg.png)
 
 ```sh
 5) Eingabe:
@@ -829,13 +829,13 @@ ks,Rechts,Links,Rechts,Links,Rechts,
 4,19,1
 ```
 
-![](https://i.ibb.co/HnxyLjK/1.pn)
+![](https://iili.io/dyjP4a.png)
 
 ```sh
 Ausgabe:
 ```
 
-![](https://i.ibb.co/1rbDXTk/1.png)
+![](https://iili.io/dyjLYv.png)
 
 ### 2.b) Lösungsidee/Abstrakt:
 
@@ -1012,11 +1012,11 @@ versuchen, das generierte Spielfeld zu lösen.
 Hat der Benutzer erfolgreich alle Batterien nach den Kriterien der Aufgabe „abgearbeitet", so
 erscheint die folgende Nachricht:
 
-![](https://i.ibb.co/r7C8C3j/1.png)
+![](https://iili.io/dyjQvR.png)
 
 Ist dem Roboter die Energie jedoch vorher ausgegangen, wird dem Benutzer die Nachricht:
 
-![](https://i.ibb.co/FhP7nhK/1.png)
+![](https://iili.io/dyjZpp.png)
 
 angezeigt. Bei beiden Fällen kann der Benutzer anschließend den Roboter logischerweise nicht
 mehr bewegen und muss das Spielfeld mit dem Knopf: „<---" bzw. „Anfang" zurücksetzen.
@@ -1025,7 +1025,7 @@ mehr bewegen und muss das Spielfeld mit dem Knopf: „<---" bzw. „Anfang" zur�
 
 Die Grafischoberfläche bietet zudem noch die Option für den Benutzer, sich einen Tipp einzuholen.
 
-![](https://i.ibb.co/nDyMjrd/1.png)
+![](https://iili.io/dyjDTN.png)
 
 Nach Betätigen des Buttons: „Tipp", kommt folgendes Fenster hervor:
 
@@ -1033,7 +1033,7 @@ Nach Betätigen des Buttons: „Tipp", kommt folgendes Fenster hervor:
 #### 2.8. Leicht
 Eingabe:
 
-![](https://i.ibb.co/ZgjWRQH/1.png)
+![](https://iili.io/dyjbjI.png)
 
 Lösung:
 Rechts,Runter,Runter,Runter,Rechts,Hoch,Links,Links,Runter,Links
@@ -1041,7 +1041,7 @@ Rechts,Runter,Runter,Runter,Rechts,Hoch,Links,Links,Runter,Links
 #### 9. Mittel
 Eingabe:
 
-![](https://i.ibb.co/QrJnz9y/1.png)
+![](https://iili.io/dyjmQt.png)
 
 Lösung:
 Hoch,Links,Links,Links,Links,Runter,Runter,Runter,Hoch,Runter,Hoch,Runter,Rechts,Rechts,Rech
@@ -1051,7 +1051,7 @@ Rechts,
 #### 2.10. Schwer
 Eingabe:
 
-![](https://i.ibb.co/fp2M8xG/1.png)
+![](https://iili.io/dyjyCX.png)
 
 Lösung:
 Runter,Runter,Hoch,Runter,Runter,Links,Links,Links,Hoch,Hoch,Runter,Hoch,Runter,Hoch,Runter
@@ -1066,7 +1066,7 @@ Hoch,Runter,Hoch,Runter,Runter,Runter,Runter,Runter,Runter,Rechts,Runter,Runter,
 Maus über die Batterie zu fahren und entsprechend den Wert zu bekommen, falls er wie hier nicht
 so gut zu erkennen ist")
 
-![](https://i.ibb.co/ZgQjGFz/1.png)
+![](https://iili.io/dyw9Gn.png)
 
 Lösung:
 Runter,Runter,Hoch,Runter,Runter,Runter,Runter,Runter,Runter,Runter,Links,Links,Links,Links,Li
