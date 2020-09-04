@@ -87,7 +87,7 @@ folgende Operator Expandieren bezieht sich auf das heuristische Erweitern eines 
 
 | Dynamischer Graph |  Statischer Graph |
 :-------------------------:|:-------------------------:
-![](https://i.ibb.co/88YH2k8/unb2.png)  |  ![](https://i.ibb.co/QmsV0r8/unb3.png)
+![](https://iili.io/dyX8cx.png)  |  ![](https://iili.io/dyXS8Q.png)
 `Vorteile:` | `Vorteile:`
 -Expandiert nicht zu fertigen Nodes, da es zu diesen logischerweise keine Kanten gibt. Somit werden Abfragen reduziert | keine delete → O(m[n])→ Alle Kanten, des Knoten v, da eine Linked List als Datenstruktur gewählt wurde.|
 -Gruppierung möglich | insert Operationen → O(1)
@@ -131,7 +131,7 @@ Kante k → IsExpandable:
 
 | true |  false | true | false | true
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
-![](https://i.ibb.co/XZ1vQVS/1.png)  |  ![](https://i.ibb.co/6J5H4Cv/2.png) | ![](https://i.ibb.co/r5gbL8n/3.png) | ![](https://i.ibb.co/b6VMRDw/4.png) | ![](https://i.ibb.co/xHfQHnR/5.png)
+![](https://iili.io/dyX6t1.png)  |  ![](https://i.imgur.com/GiTfh2w.png) | ![](https://iili.io/dyXLPa.png) | ![](https://iili.io/dyXZKJ.png) | ![](https://iili.io/dyXtcv.png)
 
 Oben ein paar Beispiele. Zudem muss berücksichtigt werden, dass der Agent(grün) kein eigentlicher
 Node ist, da seine Batterie mit ihm mitgeht. Daraus folgt, dass sein Feld als Freies angesehen wird.
@@ -148,11 +148,11 @@ logischerweiße keine Kante(n) hat.
 
 | true |  false | false | false 
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
-![](https://i.ibb.co/94bBTNq/1.png)  |  ![](https://i.ibb.co/PT3rN0h/2.png) | ![](https://i.ibb.co/52D524R/3.png) | ![](https://i.ibb.co/j3tvzt7/4.png)
+![](https://iili.io/dyXioF.png)  |  ![](https://iili.io/dyXm9p.png) | ![](https://iili.io/dyXpAN.png) | ![](https://iili.io/dyXyNI.png)
 
 Folgende Beispiele beweisen/zeigen auf, warum diese zwei Überprüfungen von Nöten sind:  
-![](https://i.ibb.co/d7Pjg3Y/1.png)  
-![](https://i.ibb.co/7YnVFwN/2.png)  
+![](https://iili.io/dyh9tt.png)  
+![](https://iili.io/dyhJoX.png)  
 Wie schon angedeutet, wird jede Kante mittels einer Breitensuche ermittelt. Dies stellt sich als
 effizient heraus, [da weder Ziel bekannt ist und zudem noch jeder Knoten in einem Durchlauf
 gefunden werden kann.](https://zerowidth.com/2013/a-visual-explanation-of-jump-point-search.html "Trotz dass Algorithmen, wie: JPS(+) schneller wären, benötigt die Breitensuche, genau wegen nur einem Durchlauf weniger Laufzeit.") Durch diese kann nun für jeden Knoten die geringsten Kosten der Kanten
@@ -160,7 +160,7 @@ von v → v' abgelesen werden, sowie für v → v wenn die obigen Kriterien erf�
 3 im Bsp:1, würde der 2d Array(welcher aus diesem Grund in Modellierung des Graphen angelegt wurde) nun
 wie folgt aussehen:
 
-![](https://i.ibb.co/pd4ZHgx/1.png)
+![](https://iili.io/dyhdVn.png)
 
 Natürlich wird die Breitensuche nur entsprechend bis zur Energie des Nodes gemacht. Die generelle
 Laufzeit für das Generieren aller Kanten in der AdjazenzList beträgt: 
@@ -200,7 +200,7 @@ Lauzeit drastisch fallen.")
 
 | Beispiel 5 |  SCC von Beispiel 5 | 
 :-------------------------:|:-------------------------:|
-![](https://i.ibb.co/tb0R0vz/1.png)  |  ![](https://i.ibb.co/Ybqm1Yf/2.png) |
+![](https://iili.io/dyh2Ps.png)  |  ![](https://iili.io/dyhFKG.png) |
 
 Warum dieser Algorithmus für die Heuristik so mächtig ist, zeigt sich gleich noch. Vorher wird von
 jeder SCC Gruppe das Maximum ausgerechnet mit der Methode Helper.calcMax → O(n). → Grün
@@ -260,11 +260,11 @@ mehrere Gruppen, des Expandierens willen, so einfach wie möglich zu gestalten.
 Graphen:
 | Vorher |  Nachher | 
 :-------------------------:|:-------------------------:|
-![](https://i.ibb.co/ZgjGXKQ/1.png)  |  ![](https://i.ibb.co/q9cYZpZ/2.png) |
+![](https://iili.io/dyhBHl.png)  |  ![](https://iili.io/dyhCR2.png) |
 
 | Vorher |  Nachher | 
 :-------------------------:|:-------------------------:|
-![](https://i.ibb.co/fxh1q8m/3.png)  |  ![](https://i.ibb.co/h7RWQ07/4.png) |
+![](https://iili.io/dyjzep.png)  |  ![](https://iili.io/dyjImN.png) |
 
 aufgeteilt. Sinn und Zweck dieser Blöcke ist es, wie auch schon bei Ansatz (I), die Anzahl V und
 somit auch die Expansionen von Ginit drastisch zu reduzieren. So kann man z.B. bei einer geraden
@@ -314,7 +314,7 @@ würde, als ohne. Dies hat zwei Gründe:
     zwar zu lokalen anderen SCC Gruppen expandieren konnten, jedoch global falsch waren.
 
 
-![](https://i.ibb.co/qsh7dRD/1.png)  
+![](https://iili.io/dyjuII.png)  
 Wie man in diesem Beispiel unschwer erkennen kann, gibt es keinen Weg von SCC0 →SCC 1 (links)
 was jedoch von dem Runtime-SCC Algorithmus nicht gesehen wird, da nur nach den lokalen
 Nachbarn gesucht wird! Würde man den Runtime/Laufzeit-Algorithmus um den globalen Faktor
@@ -368,7 +368,7 @@ entsprechenden Hauptgruppen Dienen erklären:
 
 | (3%3)2=0 |  (5%3)2=2 | (7%3)2=4 | (9%3)2=0 | 
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
-![](https://i.ibb.co/K9fb101/1.png) | ![](https://i.ibb.co/T4JPkVX/2.png) | ![](https://i.ibb.co/m8sFGTC/3.png) | ![](https://i.ibb.co/TBPwSm5/4.png)
+![](https://iili.io/dyjAXt.png) | ![](https://i.ibb.co/T4JPkVX/2.png) | ![](https://i.ibb.co/m8sFGTC/3.png) | ![](https://i.ibb.co/TBPwSm5/4.png)
 
 Wie man sehen kann, werden die Bereiche bis zu dem Ergebnis des Termes oben in 3er Blöcke
 unterteilt und dann je Ergebnis individuell unterteilt. Dabei bleiben bei jedem Ergebnis/Isomorph
