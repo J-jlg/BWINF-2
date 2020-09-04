@@ -37,7 +37,7 @@ wird. Durch Benutzung eines Graphen kann man den Roboter zielstrebig von Batteri
 schicken, was massiv Wege also Rechenleistung erspart.
 
 
-[![Build Status](https://i.ibb.co/yg52Vvw/Unbenannt1.png)](https://travis-ci.org/joemccann/dillinger)
+[![](https://iili.io/dyXvFj.png)]()
 
 Für jede Ersatzbatterie 
 
